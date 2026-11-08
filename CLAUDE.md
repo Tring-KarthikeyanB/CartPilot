@@ -41,6 +41,7 @@ docs/      PLAN.md, architecture, demo script, Devpost copy, screenshots
 - AI: `services/ai/` = `provider.py` (neutral types) · `gemini_provider.py` · `tools.py` (specs + validating `ToolExecutor`) · `agent_service.py` (loop) · `prompts.py`. Agent tests use `ScriptedProvider` (tests/test_agent.py) — never hit the real API in pytest.
 - Gemini free tier is ~20 req/day/model; don't burn quota on repeated live runs. `gemini-2.5-flash` is retired for new keys. The SDK is google-genai 3.x.
 - Agent chat can take 10–40 s (tool steps and rate-limit waits), so Android must use a read timeout of at least 120 s for `/agent/chat`.
+- Payments: `services/payments/paypal_client.py` (HTTP, no business logic) + `payment_service.py` (rules, verification, in-memory records keyed by PayPal order id). Tests use `tests/fake_paypal.py` (httpx MockTransport), never the real API. Real Sandbox create currently returns HTTP 200 + `PAYER_ACTION_REQUIRED` + `payer-action` link.
 - **`backend/.env.example` must contain placeholders only** — real keys live in `backend/.env` (gitignored).
 
 ## Android conventions

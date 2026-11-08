@@ -68,12 +68,18 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 
 **Known constraint:** the Gemini free tier allows ~20 requests/day/model (5/min). One shopping turn uses 1–4 requests. The fallback chain stretches this, but **enable billing on the Google AI project before the demo**.
 
-### M4 — PayPal Sandbox
-- [ ] PayPal client: OAuth token cache, create order, get order, capture
-- [ ] `POST /payments/create-order`, `POST /payments/capture-order`, `GET /payments/orders/{id}`, return/cancel redirect endpoints
-- [ ] Amount/currency verification, idempotent capture, cancel handling
-- [ ] Tests with mocked PayPal HTTP (httpx MockTransport): create, capture verify, mismatch, cancel, PayPal errors
-- [ ] Manual Sandbox test with sandbox buyer account
+### M4 — PayPal Sandbox ✅ (live buyer approval pending, see below)
+- [x] `PayPalClient` (httpx): OAuth client-credentials with a cached token, refresh on 401, `PayPal-Request-Id` idempotency keys, structured `PayPalError(issue, debug_id)`
+- [x] `PaymentService`: the amount comes from the server cart; requires `user_confirmed=true`; `expected_total` must equal the server total (`cart_changed` 409); out-of-stock and empty-cart guards
+- [x] Orders v2 `payment_source.paypal.experience_context` (PAY_NOW, NO_SHIPPING, return/cancel → backend); handles `payer-action` and `approve` links
+- [x] Capture: verifies order id, `COMPLETED` status, completed capture, amount + currency equal the stored snapshot, and `custom_id`. Handles PENDING (`payment_pending`), not approved (409 + approve_url), declined (402), already captured (recovered via GET). Idempotent; only purchased quantities are removed from the cart
+- [x] `POST /payments/create-order`, `POST /payments/capture-order`, `GET /payments/orders/{id}?session_id=` (resume fallback); `GET /payments/paypal/return|cancel` hand-off pages (`intent://` + `cartpilot://` link, never capture)
+- [x] Orders are scoped to their session (another session gets 404); hostile `token` values are escaped
+- [x] 25 tests against an in-memory fake PayPal (`tests/fake_paypal.py`); 104 backend tests in total
+- [x] Live Sandbox: token, create ($119.97 from cart), status, stale-total rejection, capture-before-approval → `payment_not_approved`, cross-session 404, return page
+- [ ] Live Sandbox capture after buyer approval (needs the sandbox buyer login, done manually)
+
+**Android redirect design and its limits:** a Custom Tab can't be forced to return to the app. Chrome may also block an automatic jump to a custom scheme. So the return page tries `intent://…` automatically and shows an **Open CartPilot** button. When the app resumes with a pending order it calls `GET /payments/orders/{id}`: if PayPal says `APPROVED` it captures; otherwise it shows "not completed / reopen PayPal / cancel". Success is shown only from a verified capture response.
 
 ### M5 — Android screens
 - [ ] Chat home (bubbles, suggested prompts, typing indicator, inline product cards)

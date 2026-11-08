@@ -4,7 +4,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from app.api import agent, cart, health, products
+from app.api import agent, cart, health, payments, products
 from app.core.config import APP_NAME, APP_VERSION
 from app.core.errors import register_error_handlers
 
@@ -25,6 +25,7 @@ def create_app() -> FastAPI:
     app.include_router(products.router, prefix=API_PREFIX)
     app.include_router(cart.router, prefix=API_PREFIX)
     app.include_router(agent.router, prefix=API_PREFIX)
+    app.include_router(payments.router, prefix=API_PREFIX)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     return app
 

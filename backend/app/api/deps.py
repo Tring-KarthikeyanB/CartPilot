@@ -10,6 +10,8 @@ from app.services.ai.agent_service import AgentService
 from app.services.ai.gemini_provider import GeminiProvider
 from app.services.ai.provider import LLMProvider
 from app.services.cart.cart_service import CartService
+from app.services.payments.payment_service import PaymentService
+from app.services.payments.paypal_client import PayPalClient
 from app.services.products.catalog_service import CatalogService
 
 
@@ -44,6 +46,17 @@ def get_llm_provider() -> LLMProvider | None:
 @lru_cache
 def get_agent_service() -> AgentService:
     return AgentService(get_llm_provider(), get_catalog_service(), get_cart_service())
+
+
+@lru_cache
+def get_payment_service() -> PaymentService:
+    settings = get_settings()
+    paypal = (
+        PayPalClient(settings.paypal_client_id, settings.paypal_client_secret, settings.paypal_base_url)
+        if settings.paypal_configured
+        else None
+    )
+    return PaymentService(paypal, get_cart_service())
 
 
 def absolute_url(request: Request, path: str) -> str:

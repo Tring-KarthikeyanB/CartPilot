@@ -38,7 +38,8 @@ class Settings(BaseSettings):
     paypal_base_url: str = "https://api-m.sandbox.paypal.com"
 
     # Public HTTPS base URL of this backend (used for PayPal return/cancel URLs)
-    public_base_url: str = "http://localhost:8000"
+    # Leave empty to use the URL the app called (works for emulator/USB); set to the HTTPS URL when deployed.
+    public_base_url: str = ""
     # Android deep link that the backend redirects to after PayPal approval/cancel
     android_deep_link: str = "cartpilot://payment"
 

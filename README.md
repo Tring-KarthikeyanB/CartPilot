@@ -60,6 +60,20 @@ All routes are under `/api/v1`. Errors use one shape: `{"error": {"code": "...",
 | POST | `/agent/chat` | `{"session_id", "message"}` → agent reply, product cards, actions taken, updated cart, budget status |
 | DELETE | `/agent/sessions/{session_id}` | Reset the conversation (the cart is kept) |
 
+| POST | `/payments/create-order` | `{"session_id", "expected_total", "user_confirmed": true}` → PayPal `order_id` and `approve_url` |
+| POST | `/payments/capture-order` | `{"session_id", "order_id"}` → captures with PayPal and returns a verified receipt (idempotent) |
+| GET | `/payments/orders/{order_id}?session_id=` | Status from PayPal (`can_capture` when the buyer has approved) |
+| GET | `/payments/paypal/return`, `/payments/paypal/cancel` | Pages PayPal redirects the browser to; they hand control back to the app |
+
+### PayPal Sandbox checkout
+
+1. The app shows the order summary. The user explicitly approves, and the app sends `create-order` with the total they saw. The backend recomputes the total from its own cart and refuses if the two don't match. It then creates a PayPal Orders v2 order (`intent=CAPTURE`) for the **server-computed** amount.
+2. The app opens `approve_url` in a Chrome Custom Tab. After approving or cancelling, PayPal redirects to the backend's `/payments/paypal/return` or `/payments/paypal/cancel`. That page sends the user back to the app via `intent://` or `cartpilot://payment/...`.
+3. The app calls `capture-order`. The backend captures with PayPal and checks the order ID, the `COMPLETED` status, and that the captured amount and currency match the order. Only then does it return a receipt. A deep link on its own never counts as payment.
+4. If the redirect never reaches the app (for example, the user closed the tab), the app checks `GET /payments/orders/{id}` when it resumes and captures if PayPal reports `APPROVED`.
+
+**To test in Sandbox:** create a REST app at [developer.paypal.com](https://developer.paypal.com/dashboard/applications/sandbox) and put its client ID and secret in `backend/.env`. Then pay with the **personal** sandbox account under *Sandbox → Accounts* (log in with its email and system-generated password). No real money moves.
+
 ### The AI agent
 
 `POST /agent/chat` runs a tool-calling loop with Gemini, capped at 8 model steps per message. The model can only use these seven tools:
@@ -89,7 +103,7 @@ The catalogue (`backend/seed/products.json`) is the only source of products and 
 | `AI_TIMEOUT_SECONDS` | Timeout per model request (default 60) |
 | `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | PayPal Sandbox REST app credentials |
 | `PAYPAL_BASE_URL` | `https://api-m.sandbox.paypal.com` |
-| `PUBLIC_BASE_URL` | Public HTTPS URL of the backend (for PayPal return/cancel) |
+| `PUBLIC_BASE_URL` | Public HTTPS URL of the deployed backend, used for PayPal return/cancel. Leave it empty locally to use the URL the app called (e.g. `http://10.0.2.2:8000`). |
 | `ANDROID_DEEP_LINK` | `cartpilot://payment` |
 
 The app never sends secrets to Android. `/health` reports only whether each integration is configured.
