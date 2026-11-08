@@ -47,12 +47,15 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [x] Android project (AGP 9.1.1 / Gradle 9.5.0 / Compose M3), theme, Retrofit, manual DI, Home screen showing backend health, ViewModel unit tests
 - [x] Backend run locally + health verified with curl; Android `assembleDebug` + unit tests
 
-### M2 — Catalogue, cart & payments core (backend)
-- [ ] `seed/products.json` (≥30 products, 7 categories, real image URLs)
-- [ ] ProductRepository + search (query/category/max price/in-stock), compare
-- [ ] `GET /products`, `GET /products/{id}` (+404)
-- [ ] CartService (add/remove/replace/quantity, totals, budget) + `GET /cart/{session_id}`; cart mutation endpoints for direct UI actions
-- [ ] Tests: search, compare, budget, totals, add/remove/replace, invalid IDs
+### M2 — Catalogue & cart (backend) ✅
+- [x] `seed/products.json`: 37 products across 7 categories (fictional brands, USD), including low-stock and out-of-stock items
+- [x] Self-hosted product images in `static/products/` (built by `scripts/build_product_images.py`, credits in `docs/IMAGE_CREDITS.md`)
+- [x] ProductRepository (validated on load) + CatalogService: search (category inference from text, synonyms, price/rating/stock filters, sort), compare (cheapest / top rated / best value, shared and unique features)
+- [x] `GET /products`, `/products/categories`, `/products/compare?ids=`, `/products/{id}` (404 envelope)
+- [x] CartService: in-memory session carts, add/set-quantity/remove/replace/clear, Decimal totals, budget plus cheaper-swap suggestions
+- [x] Cart endpoints: `GET/DELETE /cart/{sid}`, `POST /cart/{sid}/items`, `PATCH|DELETE /cart/{sid}/items/{pid}`, `POST /cart/{sid}/replace`, `PUT /cart/{sid}/budget`, `GET /cart/{sid}/budget-check`
+- [x] Unified error envelope `{"error":{"code","message","details?"}}`
+- [x] 51 tests: catalogue integrity, search, compare, budget, totals, add/remove/replace, invalid IDs/quantities/sessions, out of stock, API errors, client-supplied prices ignored
 
 ### M3 — AI agent
 - [ ] `LLMProvider` interface + `GeminiProvider` (google-genai, function calling)

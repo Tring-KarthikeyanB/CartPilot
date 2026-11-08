@@ -40,6 +40,26 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - Interactive API docs: http://localhost:8000/docs
 - Tests: `python -m pytest -q`
 
+### API (implemented so far)
+
+All routes are under `/api/v1`. Errors use one shape: `{"error": {"code": "...", "message": "...", "details": ...}}`.
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/health` | Liveness check. Shows whether Gemini and PayPal are configured. |
+| GET | `/products?q=&category=&min_price=&max_price=&min_rating=&in_stock=&sort=&limit=` | Search the catalogue. `sort` is one of `relevance`, `price_asc`, `price_desc`, `rating`. |
+| GET | `/products/categories` | Categories with product counts |
+| GET | `/products/compare?ids=kb-003,kb-005` | Compare 2–5 products |
+| GET | `/products/{id}` | One product |
+| GET / DELETE | `/cart/{session_id}` | Get or clear the cart |
+| POST | `/cart/{session_id}/items` | `{"product_id", "quantity"}` |
+| PATCH / DELETE | `/cart/{session_id}/items/{product_id}` | Set the quantity (`0` removes it) or remove the item |
+| POST | `/cart/{session_id}/replace` | `{"old_product_id", "new_product_id"}` |
+| PUT | `/cart/{session_id}/budget` | `{"amount": 500}` sets a budget; `null` clears it |
+| GET | `/cart/{session_id}/budget-check?budget=` | Within-budget check plus cheaper-swap suggestions |
+
+The catalogue (`backend/seed/products.json`) is the only source of products and prices. The backend computes all totals with exact decimal arithmetic and ignores any prices a client sends. Product images are served from `/static/products/`; see [image credits](docs/IMAGE_CREDITS.md).
+
 ### Environment variables
 
 | Variable | Purpose |

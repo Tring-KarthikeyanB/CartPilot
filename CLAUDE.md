@@ -33,7 +33,12 @@ docs/      PLAN.md, architecture, demo script, Devpost copy, screenshots
 - Settings via `app.core.config.get_settings()` (pydantic-settings); inject with `Depends` so tests can override.
 - LLM access goes through a provider interface in `app/services/ai/` (Gemini is one implementation) so the shopping workflow doesn't depend on a vendor SDK.
 - Cart storage: in-memory, keyed by `session_id` (no database until the full flow works).
-- Pin dependency versions in `requirements.txt`.
+- Singletons (`ProductRepository`, `CatalogService`, `CartService`) come from `app/api/deps.py`; tests override `get_cart_service` for isolation (`tests/conftest.py`).
+- Money: `Decimal` internally (`app/core/money.py`), serialized as JSON numbers; PayPal amounts use `money_str()`.
+- Errors: raise `NotFoundError` / `ConflictError` / `InvalidInputError` (`app/core/errors.py`) with a stable `code`; never return ad-hoc error dicts.
+- Product `image_url` is a `/static/...` path in the seed and is made absolute per request (`deps.absolute_url`). Deploy with `uvicorn --proxy-headers` so it's https behind Render.
+- Pin dependency versions in `requirements.txt` (dev-only tools in `requirements-dev.txt`).
+- **`backend/.env.example` must contain placeholders only** — real keys live in `backend/.env` (gitignored).
 
 ## Android conventions
 

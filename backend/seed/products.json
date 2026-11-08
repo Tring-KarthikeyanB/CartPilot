@@ -1,0 +1,230 @@
+[
+  {
+    "id": "kb-001", "name": "Aurora K2 Low-Profile Wireless Keyboard", "brand": "Aurora", "category": "keyboards",
+    "description": "Slim full-size keyboard with quiet scissor switches, Bluetooth + 2.4 GHz receiver and a 12-month battery.",
+    "price": 49.99, "currency": "USD", "rating": 4.5, "review_count": 1284, "image_url": "/static/products/kb-001.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "quiet", "full-size", "low-profile", "multi-device"], "tags": ["office", "productivity", "minimal"]
+  },
+  {
+    "id": "kb-002", "name": "Strata Slim Bluetooth Keyboard", "brand": "Strata", "category": "keyboards",
+    "description": "Compact aluminium-frame keyboard that pairs with up to three devices. Rechargeable via USB-C.",
+    "price": 34.99, "currency": "USD", "rating": 4.2, "review_count": 862, "image_url": "/static/products/kb-002.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "compact", "usb-c", "multi-device"], "tags": ["office", "budget", "travel"]
+  },
+  {
+    "id": "kb-003", "name": "Forge TKL Mechanical Keyboard (Brown Switches)", "brand": "Forge", "category": "keyboards",
+    "description": "Tenkeyless mechanical keyboard with tactile brown switches, PBT keycaps and a detachable USB-C cable.",
+    "price": 89.99, "currency": "USD", "rating": 4.6, "review_count": 2140, "image_url": "/static/products/kb-003.jpg", "stock_status": "in_stock",
+    "features": ["mechanical", "tactile", "tenkeyless", "pbt-keycaps", "wired", "usb-c"], "tags": ["typing", "enthusiast", "office"]
+  },
+  {
+    "id": "kb-004", "name": "Pastelle 65% Hot-Swap Mechanical Keyboard", "brand": "Pastelle", "category": "keyboards",
+    "description": "65% layout with hot-swappable linear switches, pastel dye-sub keycaps and gasket-mounted plate for a soft, quiet sound.",
+    "price": 109.0, "currency": "USD", "rating": 4.7, "review_count": 516, "image_url": "/static/products/kb-004.jpg", "stock_status": "low_stock",
+    "features": ["mechanical", "linear", "hot-swap", "65-percent", "gasket-mount", "wired", "wireless", "bluetooth"], "tags": ["enthusiast", "aesthetic", "typing"]
+  },
+  {
+    "id": "kb-005", "name": "Keyline K84 Compact Wireless Mechanical Keyboard", "brand": "Keyline", "category": "keyboards",
+    "description": "75% wireless mechanical keyboard with low-latency 2.4 GHz, Bluetooth for three devices and Mac/Windows keycaps.",
+    "price": 79.99, "currency": "USD", "rating": 4.5, "review_count": 1930, "image_url": "/static/products/kb-005.jpg", "stock_status": "in_stock",
+    "features": ["mechanical", "wireless", "bluetooth", "compact", "75-percent", "multi-device", "mac-compatible"], "tags": ["office", "productivity", "typing"]
+  },
+  {
+    "id": "kb-006", "name": "Nightfall RGB Full-Size Mechanical Keyboard", "brand": "Nightfall", "category": "keyboards",
+    "description": "Full-size gaming keyboard with per-key RGB, red linear switches, media dial and magnetic wrist rest.",
+    "price": 129.99, "currency": "USD", "rating": 4.4, "review_count": 3302, "image_url": "/static/products/kb-006.jpg", "stock_status": "in_stock",
+    "features": ["mechanical", "linear", "rgb", "full-size", "wrist-rest", "media-controls", "wired"], "tags": ["gaming", "premium"]
+  },
+  {
+    "id": "kb-007", "name": "Lumen Backlit Membrane Keyboard", "brand": "Lumen", "category": "keyboards",
+    "description": "Affordable spill-resistant keyboard with soft amber backlight and quiet membrane keys.",
+    "price": 29.99, "currency": "USD", "rating": 4.0, "review_count": 745, "image_url": "/static/products/kb-007.jpg", "stock_status": "in_stock",
+    "features": ["backlit", "quiet", "spill-resistant", "full-size", "wired"], "tags": ["budget", "office"]
+  },
+
+  {
+    "id": "ms-001", "name": "Glide Wireless Mouse", "brand": "Glide", "category": "mice",
+    "description": "Comfortable ambidextrous wireless mouse with silent clicks and an 18-month AA battery life.",
+    "price": 19.99, "currency": "USD", "rating": 4.3, "review_count": 4120, "image_url": "/static/products/ms-001.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "silent-clicks", "ambidextrous", "long-battery"], "tags": ["budget", "office"]
+  },
+  {
+    "id": "ms-002", "name": "Precision Pro Ergonomic Mouse", "brand": "Precision", "category": "mice",
+    "description": "Sculpted ergonomic mouse with 8K DPI sensor, MagSpeed-style scroll wheel and multi-device switching.",
+    "price": 59.99, "currency": "USD", "rating": 4.7, "review_count": 2875, "image_url": "/static/products/ms-002.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "ergonomic", "multi-device", "usb-c", "fast-scroll"], "tags": ["productivity", "office", "premium"]
+  },
+  {
+    "id": "ms-003", "name": "FeatherLite 58g Gaming Mouse", "brand": "FeatherLite", "category": "mice",
+    "description": "Ultra-light honeycomb shell, 26K DPI optical sensor and paracord-style cable for fast, precise aim.",
+    "price": 49.99, "currency": "USD", "rating": 4.5, "review_count": 1560, "image_url": "/static/products/ms-003.jpg", "stock_status": "in_stock",
+    "features": ["lightweight", "wired", "high-dpi", "rgb"], "tags": ["gaming"]
+  },
+  {
+    "id": "ms-004", "name": "Vector G-Series RGB Gaming Mouse", "brand": "Vector", "category": "mice",
+    "description": "Wireless gaming mouse with 11 programmable buttons, adjustable weights and 60-hour battery.",
+    "price": 69.99, "currency": "USD", "rating": 4.6, "review_count": 2210, "image_url": "/static/products/ms-004.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "programmable-buttons", "rgb", "adjustable-weight", "high-dpi"], "tags": ["gaming", "premium"]
+  },
+
+  {
+    "id": "hp-001", "name": "Studio Monitor Wired Headphones", "brand": "Sonance", "category": "headphones",
+    "description": "Closed-back studio headphones with flat, accurate sound, swivel ear cups and a 3 m coiled cable.",
+    "price": 39.99, "currency": "USD", "rating": 4.4, "review_count": 3650, "image_url": "/static/products/hp-001.jpg", "stock_status": "in_stock",
+    "features": ["wired", "closed-back", "over-ear", "studio-sound"], "tags": ["budget", "music", "recording"]
+  },
+  {
+    "id": "hp-002", "name": "Pulse On-Ear Headphones", "brand": "Pulse", "category": "headphones",
+    "description": "Lightweight on-ear headphones with inline mic and foldable steel headband.",
+    "price": 24.99, "currency": "USD", "rating": 4.0, "review_count": 980, "image_url": "/static/products/hp-002.jpg", "stock_status": "in_stock",
+    "features": ["wired", "on-ear", "microphone", "foldable"], "tags": ["budget", "calls"]
+  },
+  {
+    "id": "hp-003", "name": "Halo ANC Wireless Headphones", "brand": "Halo", "category": "headphones",
+    "description": "Active noise-cancelling over-ear headphones with 40-hour battery, multipoint Bluetooth and beamforming mics for calls.",
+    "price": 149.99, "currency": "USD", "rating": 4.6, "review_count": 2480, "image_url": "/static/products/hp-003.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "noise-cancelling", "over-ear", "microphone", "multipoint", "long-battery"], "tags": ["office", "calls", "travel"]
+  },
+  {
+    "id": "hp-004", "name": "Quietude XM Noise-Cancelling Headphones", "brand": "Quietude", "category": "headphones",
+    "description": "Flagship adaptive noise cancelling, spatial audio, 30-hour battery and plush memory-foam cushions.",
+    "price": 279.99, "currency": "USD", "rating": 4.8, "review_count": 5120, "image_url": "/static/products/hp-004.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "noise-cancelling", "over-ear", "microphone", "multipoint", "spatial-audio"], "tags": ["premium", "travel", "office"]
+  },
+  {
+    "id": "hp-005", "name": "Vibe Wireless Over-Ear Headphones", "brand": "Vibe", "category": "headphones",
+    "description": "Bass-forward wireless over-ear headphones with 50-hour battery and a built-in mic.",
+    "price": 69.99, "currency": "USD", "rating": 4.3, "review_count": 1890, "image_url": "/static/products/hp-005.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "over-ear", "microphone", "long-battery"], "tags": ["music", "value"]
+  },
+  {
+    "id": "hp-006", "name": "AirLite True Wireless Earbuds", "brand": "AirLite", "category": "headphones",
+    "description": "In-ear earbuds with active noise cancelling, transparency mode and wireless charging case.",
+    "price": 89.99, "currency": "USD", "rating": 4.5, "review_count": 3340, "image_url": "/static/products/hp-006.jpg", "stock_status": "low_stock",
+    "features": ["wireless", "bluetooth", "noise-cancelling", "in-ear", "microphone", "wireless-charging"], "tags": ["travel", "calls"]
+  },
+  {
+    "id": "hp-007", "name": "Buds Duo Wireless Earbuds", "brand": "Duo", "category": "headphones",
+    "description": "Everyday wireless earbuds with clear call mics, IPX4 sweat resistance and 24-hour total battery.",
+    "price": 49.99, "currency": "USD", "rating": 4.2, "review_count": 1420, "image_url": "/static/products/hp-007.jpg", "stock_status": "in_stock",
+    "features": ["wireless", "bluetooth", "in-ear", "microphone", "water-resistant"], "tags": ["budget", "calls", "fitness"]
+  },
+
+  {
+    "id": "ls-001", "name": "FoldUp Aluminium Laptop Stand", "brand": "FoldUp", "category": "laptop_stands",
+    "description": "Portable folding stand with six height settings for 10-17\" laptops. Weighs 240 g and fits in a sleeve pocket.",
+    "price": 29.99, "currency": "USD", "rating": 4.4, "review_count": 2760, "image_url": "/static/products/ls-001.jpg", "stock_status": "in_stock",
+    "features": ["foldable", "adjustable-height", "aluminium", "portable"], "tags": ["budget", "travel", "ergonomics"]
+  },
+  {
+    "id": "ls-002", "name": "Elevate Pro Adjustable Laptop Stand", "brand": "Elevate", "category": "laptop_stands",
+    "description": "Solid aluminium stand that raises your screen to eye level, with 360° swivel base and gas-spring height adjustment.",
+    "price": 59.99, "currency": "USD", "rating": 4.7, "review_count": 1340, "image_url": "/static/products/ls-002.jpg", "stock_status": "in_stock",
+    "features": ["adjustable-height", "swivel", "aluminium", "sturdy"], "tags": ["premium", "ergonomics", "office"]
+  },
+  {
+    "id": "ls-003", "name": "ArcticFlow Cooling Laptop Stand", "brand": "ArcticFlow", "category": "laptop_stands",
+    "description": "Angled stand with two quiet fans to keep laptops cool under load. USB powered with pass-through port.",
+    "price": 34.99, "currency": "USD", "rating": 4.1, "review_count": 690, "image_url": "/static/products/ls-003.jpg", "stock_status": "in_stock",
+    "features": ["cooling-fans", "angled", "usb-powered"], "tags": ["gaming", "value"]
+  },
+  {
+    "id": "ls-004", "name": "Cyclone Dual-Fan Cooling Pad", "brand": "Cyclone", "category": "laptop_stands",
+    "description": "Low-profile cooling pad with twin 120 mm fans and blue LED, for laptops up to 15.6\".",
+    "price": 24.99, "currency": "USD", "rating": 3.9, "review_count": 455, "image_url": "/static/products/ls-004.jpg", "stock_status": "in_stock",
+    "features": ["cooling-fans", "usb-powered", "led"], "tags": ["budget", "gaming"]
+  },
+  {
+    "id": "ls-005", "name": "AeroMesh Ventilated Laptop Riser", "brand": "AeroMesh", "category": "laptop_stands",
+    "description": "Large mesh-top riser with a 160 mm silent fan and five tilt angles for laptops up to 17\".",
+    "price": 39.99, "currency": "USD", "rating": 4.3, "review_count": 820, "image_url": "/static/products/ls-005.jpg", "stock_status": "out_of_stock",
+    "features": ["cooling-fans", "adjustable-angle", "mesh", "usb-powered"], "tags": ["gaming", "ergonomics"]
+  },
+
+  {
+    "id": "mn-001", "name": "ClearView 24\" FHD IPS Monitor", "brand": "ClearView", "category": "monitors",
+    "description": "24-inch 1080p IPS panel, 75 Hz, slim bezels, HDMI + DisplayPort and flicker-free backlight.",
+    "price": 149.99, "currency": "USD", "rating": 4.4, "review_count": 3980, "image_url": "/static/products/mn-001.jpg", "stock_status": "in_stock",
+    "features": ["24-inch", "1080p", "ips", "75hz", "hdmi", "displayport", "eye-care"], "tags": ["office", "value"]
+  },
+  {
+    "id": "mn-002", "name": "ClearView 27\" QHD IPS Monitor", "brand": "ClearView", "category": "monitors",
+    "description": "27-inch 1440p IPS with 99% sRGB, USB-C 65 W charging and height-adjustable stand.",
+    "price": 279.99, "currency": "USD", "rating": 4.6, "review_count": 2150, "image_url": "/static/products/mn-002.jpg", "stock_status": "in_stock",
+    "features": ["27-inch", "1440p", "ips", "usb-c", "height-adjustable", "srgb"], "tags": ["office", "productivity", "creator"]
+  },
+  {
+    "id": "mn-003", "name": "Prism 27\" 165Hz Gaming Monitor", "brand": "Prism", "category": "monitors",
+    "description": "27-inch 1440p fast IPS, 165 Hz, 1 ms response and adaptive sync for smooth gaming.",
+    "price": 329.99, "currency": "USD", "rating": 4.5, "review_count": 1760, "image_url": "/static/products/mn-003.jpg", "stock_status": "in_stock",
+    "features": ["27-inch", "1440p", "ips", "165hz", "adaptive-sync", "hdmi", "displayport"], "tags": ["gaming"]
+  },
+  {
+    "id": "mn-004", "name": "Spectra 32\" 4K Creator Monitor", "brand": "Spectra", "category": "monitors",
+    "description": "32-inch 4K UHD panel, factory-calibrated 98% DCI-P3, HDR400 and USB-C hub.",
+    "price": 449.99, "currency": "USD", "rating": 4.7, "review_count": 940, "image_url": "/static/products/mn-004.jpg", "stock_status": "in_stock",
+    "features": ["32-inch", "4k", "ips", "hdr", "usb-c", "color-accurate"], "tags": ["creator", "premium"]
+  },
+  {
+    "id": "mn-005", "name": "Horizon 34\" Ultrawide Curved Monitor", "brand": "Horizon", "category": "monitors",
+    "description": "34-inch 3440x1440 curved VA ultrawide, 144 Hz, ideal for multitasking and immersive games.",
+    "price": 499.99, "currency": "USD", "rating": 4.5, "review_count": 1210, "image_url": "/static/products/mn-005.jpg", "stock_status": "low_stock",
+    "features": ["34-inch", "ultrawide", "curved", "144hz", "1440p"], "tags": ["gaming", "productivity", "premium"]
+  },
+
+  {
+    "id": "wc-001", "name": "Clarity 1080p USB Webcam", "brand": "Clarity", "category": "webcams",
+    "description": "Full HD 30 fps webcam with dual noise-reducing mics, auto light correction and a privacy shutter.",
+    "price": 39.99, "currency": "USD", "rating": 4.3, "review_count": 2630, "image_url": "/static/products/wc-001.jpg", "stock_status": "in_stock",
+    "features": ["1080p", "microphone", "privacy-shutter", "auto-light-correction", "usb"], "tags": ["office", "calls", "value"]
+  },
+  {
+    "id": "wc-002", "name": "StreamCam Pro 1080p60", "brand": "StreamCam", "category": "webcams",
+    "description": "1080p at 60 fps with smart auto-framing, USB-C and vertical video mode for creators.",
+    "price": 89.99, "currency": "USD", "rating": 4.5, "review_count": 1320, "image_url": "/static/products/wc-002.jpg", "stock_status": "in_stock",
+    "features": ["1080p", "60fps", "auto-framing", "usb-c", "microphone"], "tags": ["creator", "streaming"]
+  },
+  {
+    "id": "wc-003", "name": "Pivot 720p Compact Webcam", "brand": "Pivot", "category": "webcams",
+    "description": "Plug-and-play 720p webcam with built-in mic and universal monitor clip.",
+    "price": 24.99, "currency": "USD", "rating": 3.9, "review_count": 610, "image_url": "/static/products/wc-003.jpg", "stock_status": "in_stock",
+    "features": ["720p", "microphone", "usb"], "tags": ["budget", "calls"]
+  },
+  {
+    "id": "wc-004", "name": "Vista 4K Webcam with Auto-Focus", "brand": "Vista", "category": "webcams",
+    "description": "4K UHD sensor with HDR, fast auto-focus, 90° field of view and stereo mics.",
+    "price": 129.99, "currency": "USD", "rating": 4.6, "review_count": 870, "image_url": "/static/products/wc-004.jpg", "stock_status": "out_of_stock",
+    "features": ["4k", "hdr", "auto-focus", "microphone", "usb"], "tags": ["premium", "creator", "office"]
+  },
+
+  {
+    "id": "da-001", "name": "Lumi LED Desk Lamp", "brand": "Lumi", "category": "desk_accessories",
+    "description": "Adjustable gooseneck LED lamp with three colour temperatures and stepless dimming.",
+    "price": 34.99, "currency": "USD", "rating": 4.4, "review_count": 1540, "image_url": "/static/products/da-001.jpg", "stock_status": "in_stock",
+    "features": ["led", "dimmable", "adjustable", "eye-care"], "tags": ["office", "lighting"]
+  },
+  {
+    "id": "da-002", "name": "FlexArm Single Monitor Arm", "brand": "FlexArm", "category": "desk_accessories",
+    "description": "Gas-spring monitor arm for 17-32\" screens up to 9 kg, with clamp and grommet mounts and cable routing.",
+    "price": 79.99, "currency": "USD", "rating": 4.6, "review_count": 1980, "image_url": "/static/products/da-002.jpg", "stock_status": "in_stock",
+    "features": ["gas-spring", "vesa", "cable-management", "adjustable"], "tags": ["ergonomics", "office"]
+  },
+  {
+    "id": "da-003", "name": "Essentials Desk Organizer Set", "brand": "Essentials", "category": "desk_accessories",
+    "description": "Five-piece matte organizer set: pen cup, tray, phone dock, cable box and charger caddy.",
+    "price": 29.99, "currency": "USD", "rating": 4.2, "review_count": 720, "image_url": "/static/products/da-003.jpg", "stock_status": "in_stock",
+    "features": ["organizer", "cable-management", "minimal"], "tags": ["office", "minimal"]
+  },
+  {
+    "id": "da-004", "name": "Charge & Cable Tidy Kit", "brand": "Tidy", "category": "desk_accessories",
+    "description": "Under-desk cable tray, 20 velcro ties, adhesive clips and a 65 W 4-port USB-C charging hub.",
+    "price": 44.99, "currency": "USD", "rating": 4.3, "review_count": 1105, "image_url": "/static/products/da-004.jpg", "stock_status": "in_stock",
+    "features": ["cable-management", "usb-c", "charger", "usb-hub"], "tags": ["office", "productivity"]
+  },
+  {
+    "id": "da-005", "name": "Felt Desk Mat XL", "brand": "Essentials", "category": "desk_accessories",
+    "description": "90 x 40 cm wool-felt desk mat with non-slip cork base that protects your desk and dampens keyboard noise.",
+    "price": 24.99, "currency": "USD", "rating": 4.5, "review_count": 2340, "image_url": "/static/products/da-005.jpg", "stock_status": "in_stock",
+    "features": ["desk-mat", "non-slip", "felt", "xl"], "tags": ["minimal", "office", "budget"]
+  }
+]
