@@ -38,6 +38,9 @@ docs/      PLAN.md, architecture, demo script, Devpost copy, screenshots
 - Errors: raise `NotFoundError` / `ConflictError` / `InvalidInputError` (`app/core/errors.py`) with a stable `code`; never return ad-hoc error dicts.
 - Product `image_url` is a `/static/...` path in the seed and is made absolute per request (`deps.absolute_url`). Deploy with `uvicorn --proxy-headers` so it's https behind Render.
 - Pin dependency versions in `requirements.txt` (dev-only tools in `requirements-dev.txt`).
+- AI: `services/ai/` = `provider.py` (neutral types) · `gemini_provider.py` · `tools.py` (specs + validating `ToolExecutor`) · `agent_service.py` (loop) · `prompts.py`. Agent tests use `ScriptedProvider` (tests/test_agent.py) — never hit the real API in pytest.
+- Gemini free tier is ~20 req/day/model; don't burn quota on repeated live runs. `gemini-2.5-flash` is retired for new keys. The SDK is google-genai 3.x.
+- Agent chat can take 10–40 s (tool steps and rate-limit waits), so Android must use a read timeout of at least 120 s for `/agent/chat`.
 - **`backend/.env.example` must contain placeholders only** — real keys live in `backend/.env` (gitignored).
 
 ## Android conventions

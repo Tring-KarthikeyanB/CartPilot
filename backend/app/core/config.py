@@ -5,6 +5,7 @@ environment only. See backend/.env.example for the full list.
 """
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -12,14 +13,24 @@ APP_NAME = "CartPilot AI"
 APP_VERSION = "0.1.0"
 
 
+ENV_FILE = Path(__file__).resolve().parents[2] / ".env"  # backend/.env, regardless of the working directory
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore")
 
     environment: str = "development"
 
     # AI provider
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.5-flash"
+    # Comma-separated models tried when the primary is rate limited / out of quota (quotas are per model).
+    gemini_fallback_models: str = "gemini-3.5-flash-lite,gemini-3.1-flash-lite"
+    ai_timeout_seconds: float = 60.0
+
+    @property
+    def gemini_fallback_model_list(self) -> list[str]:
+        return [m.strip() for m in self.gemini_fallback_models.split(",") if m.strip()]
 
     # PayPal Sandbox
     paypal_client_id: str = ""

@@ -57,12 +57,16 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [x] Unified error envelope `{"error":{"code","message","details?"}}`
 - [x] 51 tests: catalogue integrity, search, compare, budget, totals, add/remove/replace, invalid IDs/quantities/sessions, out of stock, API errors, client-supplied prices ignored
 
-### M3 — AI agent
-- [ ] `LLMProvider` interface + `GeminiProvider` (google-genai, function calling)
-- [ ] 7 tools: search_products, compare_products, add_to_cart, remove_from_cart, replace_product, get_cart_summary, validate_budget — argument validation, bounded loop
-- [ ] `POST /agent/chat {session_id, message}` → reply text, products referenced, cart snapshot, budget
-- [ ] Tests with a scripted fake provider (tool loop, invalid tool args, unknown product IDs)
-- [ ] Manual test with real Gemini key
+### M3 — AI agent ✅
+- [x] Provider-neutral `LLMProvider` interface (`services/ai/provider.py`) + `GeminiProvider` (google-genai 3.0, manual function calling, thought signatures replayed verbatim)
+- [x] Rate-limit handling: short 429s retried using the server's `retryDelay`; daily-quota 429s put the model in cooldown and fall back to the next model (`GEMINI_FALLBACK_MODELS`); distinct `ai_rate_limited` / `ai_quota_exhausted` errors
+- [x] 7 tools with strict Pydantic argument validation (unknown fields rejected), session bound server-side, structured tool errors the model can recover from; no payment tool
+- [x] Agent loop: ≤8 model steps/turn, ≤8 tool calls/step, every call answered in order, history trimmed at user boundaries, per-session lock, failed turns not committed
+- [x] `POST /agent/chat` → reply, grounded product cards (only products surfaced by tools *and* named in the reply), actions, backend cart, budget; `DELETE /agent/sessions/{id}` resets conversation
+- [x] 30 new tests (scripted fake provider plus stubbed Gemini SDK); 79 backend tests in total
+- [x] Live test with real Gemini: home-office build ($500), cheaper swap with a new $450 budget, off-catalogue item (chair), price-override attempt, "ready to pay" points the user to Checkout
+
+**Known constraint:** the Gemini free tier allows ~20 requests/day/model (5/min). One shopping turn uses 1–4 requests. The fallback chain stretches this, but **enable billing on the Google AI project before the demo**.
 
 ### M4 — PayPal Sandbox
 - [ ] PayPal client: OAuth token cache, create order, get order, capture
