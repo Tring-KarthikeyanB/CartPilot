@@ -138,6 +138,10 @@ Command line: `cd android && ./gradlew assembleDebug testDebugUnitTest`
 
 The API contract tests decode real backend responses stored in `app/src/test/resources/fixtures`. Regenerate them after changing the API with `cd backend && python scripts/export_api_fixtures.py`.
 
+## Deployment
+
+The backend deploys to Render with the `render.yaml` Blueprint. Release builds of the app call `https://cartpilot-api.onrender.com/`. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the step-by-step guide, including cold starts and free-plan notes. CI runs the backend tests and the Android build, tests and lint on every push.
+
 ## License
 
 [MIT](LICENSE)

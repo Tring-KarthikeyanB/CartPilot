@@ -27,6 +27,11 @@ def create_app() -> FastAPI:
     app.include_router(agent.router, prefix=API_PREFIX)
     app.include_router(payments.router, prefix=API_PREFIX)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+    @app.get("/", include_in_schema=False)
+    def root() -> dict:
+        return {"service": APP_NAME, "version": APP_VERSION, "health": f"{API_PREFIX}/health", "docs": "/docs"}
+
     return app
 
 

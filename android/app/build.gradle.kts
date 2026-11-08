@@ -10,8 +10,12 @@ val localProps = Properties().apply {
     val file = rootProject.file("local.properties")
     if (file.exists()) file.inputStream().use { load(it) }
 }
-val apiBaseUrl: String = localProps.getProperty("cartpilot.apiBaseUrl")
-    ?: providers.gradleProperty("cartpilot.apiBaseUrl").get()
+fun cartPilotProperty(name: String): String =
+    localProps.getProperty(name) ?: providers.gradleProperty(name).get()
+
+// Debug talks to the local backend; release talks to the deployed HTTPS backend (Render).
+val apiBaseUrl = cartPilotProperty("cartpilot.apiBaseUrl")
+val releaseApiBaseUrl = cartPilotProperty("cartpilot.releaseApiBaseUrl")
 
 android {
     namespace = "com.cartpilot"
@@ -30,6 +34,9 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "API_BASE_URL", "\"$releaseApiBaseUrl\"")
+            // Demo/hackathon build: signed with the local debug key so the APK installs directly.
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

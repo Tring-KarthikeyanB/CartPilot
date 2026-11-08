@@ -94,10 +94,17 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [x] Tests: 6 Home + 11 Checkout ViewModel tests, 7 API contract tests decoding real backend responses (`backend/scripts/export_api_fixtures.py` → `app/src/test/resources/fixtures`). 24 Android tests; `assembleDebug` and `lintDebug` pass
 - [ ] Run on a device/emulator against the live backend (this PC has no system image or emulator hypervisor driver)
 
-### M6 — Deploy & end-to-end
-- [ ] Render deployment (render.yaml), env vars, HTTPS public URL
-- [ ] Release-config Android build pointing at Render
-- [ ] Full E2E on emulator/device with Sandbox buyer
+### M6 — Deploy & end-to-end (repo-side done; account steps pending)
+- [x] `render.yaml` Blueprint (free web service `cartpilot-api`, rootDir backend, health check, Python 3.12.10, secrets as `sync: false`)
+- [x] Production config: `--proxy-headers` + `FORWARDED_ALLOW_IPS=*` (https URLs behind Render's proxy), PayPal return URL from `RENDER_EXTERNAL_URL`, `/` info route
+- [x] Rehearsal: clean-venv install from requirements.txt; Render start command with simulated proxy headers → https image URLs, health OK, real Sandbox order created. This caught a shell-glob bug in `--forwarded-allow-ips "*"`, now moved to an env var
+- [x] Android release build → `cartpilot.releaseApiBaseUrl` (https://cartpilot-api.onrender.com/), signed with the debug key for demo installs; debug build keeps the local URL
+- [x] GitHub Actions CI: backend pytest + Android assembleDebug/testDebugUnitTest/lintDebug; `gradlew` marked executable
+- [x] Committed `.env.example` refreshed (placeholders only); full git history scanned for secrets (clean)
+- [x] `docs/DEPLOYMENT.md`
+- [ ] Push to the public GitHub repo (needs the repo URL)
+- [ ] Create the Render Blueprint and enter secrets (Render account)
+- [ ] Verify the live `/api/v1/health`, then the full E2E on a device with the release APK and the Sandbox buyer
 
 ### M7 — Submission
 - [ ] README (setup, env vars, sandbox testing), architecture diagram, screenshots

@@ -34,7 +34,7 @@ _ORDER_ID_RE = re.compile(ORDER_ID_PATTERN)
 def _return_base_url(request: Request, settings: Settings) -> str:
     # PUBLIC_BASE_URL (e.g. the Render HTTPS URL) wins; otherwise use the URL the app called us on,
     # which is reachable from the device's browser too (10.0.2.2 on the emulator, localhost via adb reverse).
-    return settings.public_base_url or str(request.base_url)
+    return settings.effective_public_base_url or str(request.base_url)
 
 
 @router.post("/create-order", response_model=CreateOrderResponse)

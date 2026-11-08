@@ -285,3 +285,14 @@ def test_payments_unavailable_api(client, carts, filled_cart):
     app.dependency_overrides[get_payment_service] = lambda: PaymentService(None, carts)
     r = client.post("/api/v1/payments/create-order", json={"session_id": SESSION, "expected_total": 119.97, "user_confirmed": True})
     assert r.status_code == 503 and r.json()["error"]["code"] == "payments_unavailable"
+
+
+def test_render_external_url_is_used_for_paypal_return(pay_client, paypal, filled_cart):
+    app.dependency_overrides[get_settings] = lambda: Settings(
+        _env_file=None, public_base_url="", render_external_url="https://cartpilot-api.onrender.com/"
+    )
+    order = pay_client.post(
+        "/api/v1/payments/create-order", json={"session_id": SESSION, "expected_total": 119.97, "user_confirmed": True}
+    ).json()
+    ctx = paypal.orders[order["order_id"]]["body"]["payment_source"]["paypal"]["experience_context"]
+    assert ctx["return_url"] == "https://cartpilot-api.onrender.com/api/v1/payments/paypal/return"

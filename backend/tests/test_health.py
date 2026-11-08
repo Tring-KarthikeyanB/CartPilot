@@ -37,3 +37,9 @@ def test_health_reports_configured_integrations_without_leaking_secrets():
 def test_unknown_route_returns_404():
     client = _client(Settings(_env_file=None))
     assert client.get("/api/v1/does-not-exist").status_code == 404
+
+
+def test_root_points_to_health_and_docs():
+    client = _client(Settings(_env_file=None))
+    body = client.get("/").json()
+    assert body["health"] == "/api/v1/health" and body["docs"] == "/docs"

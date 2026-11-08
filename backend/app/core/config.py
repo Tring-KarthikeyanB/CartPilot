@@ -40,8 +40,15 @@ class Settings(BaseSettings):
     # Public HTTPS base URL of this backend (used for PayPal return/cancel URLs)
     # Leave empty to use the URL the app called (works for emulator/USB); set to the HTTPS URL when deployed.
     public_base_url: str = ""
+    # Set automatically by Render (e.g. https://cartpilot-api.onrender.com)
+    render_external_url: str = ""
     # Android deep link that the backend redirects to after PayPal approval/cancel
     android_deep_link: str = "cartpilot://payment"
+
+    @property
+    def effective_public_base_url(self) -> str:
+        """Explicit PUBLIC_BASE_URL, else Render's URL, else '' (use the request's URL)."""
+        return (self.public_base_url or self.render_external_url).rstrip("/")
 
     @property
     def gemini_configured(self) -> bool:
