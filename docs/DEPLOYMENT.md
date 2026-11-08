@@ -36,7 +36,7 @@ PayPal return/cancel URLs use Render's `RENDER_EXTERNAL_URL` automatically, so y
 
 ## 3. Point the Android release build at it
 
-If Render gave the service a different URL (for example, the name `cartpilot-api` was taken), update `cartpilot.releaseApiBaseUrl` in `android/gradle.properties`, or override it in `android/local.properties`. Then:
+The deployed service is https://cartpilot-api-kc77.onrender.com (Render added a suffix because the name was taken), already set in `android/gradle.properties`. If it changes, update `cartpilot.releaseApiBaseUrl` in `android/gradle.properties`, or override it in `android/local.properties`. Then:
 
 ```bash
 cd android

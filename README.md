@@ -151,7 +151,7 @@ Regenerate the API contract fixtures after changing the backend schemas: `cd bac
 
 ## Deployment
 
-The backend deploys to Render with the `render.yaml` Blueprint. Release builds call `https://cartpilot-api.onrender.com/`. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the steps, cold-start notes and free-plan limits.
+The backend deploys to Render with the `render.yaml` Blueprint. Release builds call `https://cartpilot-api-kc77.onrender.com/`. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the steps, cold-start notes and free-plan limits.
 
 ## Project status
 

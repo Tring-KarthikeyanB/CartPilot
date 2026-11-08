@@ -98,12 +98,12 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [x] `render.yaml` Blueprint (free web service `cartpilot-api`, rootDir backend, health check, Python 3.12.10, secrets as `sync: false`)
 - [x] Production config: `--proxy-headers` + `FORWARDED_ALLOW_IPS=*` (https URLs behind Render's proxy), PayPal return URL from `RENDER_EXTERNAL_URL`, `/` info route
 - [x] Rehearsal: clean-venv install from requirements.txt; Render start command with simulated proxy headers → https image URLs, health OK, real Sandbox order created. This caught a shell-glob bug in `--forwarded-allow-ips "*"`, now moved to an env var
-- [x] Android release build → `cartpilot.releaseApiBaseUrl` (https://cartpilot-api.onrender.com/), signed with the debug key for demo installs; debug build keeps the local URL
+- [x] Android release build → `cartpilot.releaseApiBaseUrl` (https://cartpilot-api-kc77.onrender.com/), signed with the debug key for demo installs; debug build keeps the local URL
 - [x] GitHub Actions CI: backend pytest + Android assembleDebug/testDebugUnitTest/lintDebug; `gradlew` marked executable
 - [x] Committed `.env.example` refreshed (placeholders only); full git history scanned for secrets (clean)
 - [x] `docs/DEPLOYMENT.md`
 - [x] Pushed to https://github.com/Tring-KarthikeyanB/CartPilot (visibility must be set to Public)
-- [ ] Create the Render Blueprint and enter secrets (Render account)
+- [x] Deployed on Render: https://cartpilot-api-kc77.onrender.com. Live checks: health (production, Gemini + PayPal configured), https image URLs behind the proxy, 37-product catalogue, error envelope, /docs, real Sandbox order create/status, stale-total and capture-before-approval refusals, return-page deep link, live Gemini chat turn (added AirLite earbuds $89.99 in 6.8 s)
 - [ ] Verify the live `/api/v1/health`, then the full E2E on a device with the release APK and the Sandbox buyer
 
 ### M7 — Submission (materials done; publishing pending)

@@ -2,7 +2,7 @@
 
 **Setup before recording:**
 
-- **Warm up the backend:** open `https://cartpilot-api.onrender.com/api/v1/health`, since a free Render instance sleeps.
+- **Warm up the backend:** open `https://cartpilot-api-kc77.onrender.com/api/v1/health`, since a free Render instance sleeps.
 - **Gemini quota:** confirm billing is on (or that the quota is fresh).
 - **Start clean:** fresh install of the release APK, cart empty, PayPal sandbox buyer login at hand.
 - **Phone:** screen recording on, notifications silenced.
