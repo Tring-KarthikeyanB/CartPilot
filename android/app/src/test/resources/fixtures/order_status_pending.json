@@ -1,0 +1,10 @@
+{
+  "order_id": "ORDER00001TEST",
+  "status": "awaiting_approval",
+  "paypal_status": "PAYER_ACTION_REQUIRED",
+  "can_capture": false,
+  "approve_url": "https://www.sandbox.paypal.com/checkoutnow?token=ORDER00001TEST",
+  "amount": 229.98,
+  "currency": "USD",
+  "receipt": null
+}

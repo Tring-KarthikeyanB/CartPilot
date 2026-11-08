@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "cart_changed",
+    "message": "Your cart total changed to $229.98. Please review it before paying.",
+    "details": {
+      "current_total": 229.98
+    }
+  }
+}

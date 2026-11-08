@@ -1,0 +1,23 @@
+{
+  "order_id": "ORDER00001TEST",
+  "approve_url": "https://www.sandbox.paypal.com/checkoutnow?token=ORDER00001TEST",
+  "status": "awaiting_approval",
+  "amount": 229.98,
+  "currency": "USD",
+  "items": [
+    {
+      "product_id": "hp-003",
+      "name": "Halo ANC Wireless Headphones",
+      "quantity": 1,
+      "unit_price": 149.99,
+      "line_total": 149.99
+    },
+    {
+      "product_id": "kb-005",
+      "name": "Keyline K84 Compact Wireless Mechanical Keyboard",
+      "quantity": 1,
+      "unit_price": 79.99,
+      "line_total": 79.99
+    }
+  ]
+}

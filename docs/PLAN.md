@@ -81,14 +81,18 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 
 **Android redirect design and its limits:** a Custom Tab can't be forced to return to the app. Chrome may also block an automatic jump to a custom scheme. So the return page tries `intent://…` automatically and shows an **Open CartPilot** button. When the app resumes with a pending order it calls `GET /payments/orders/{id}`: if PayPal says `APPROVED` it captures; otherwise it shows "not completed / reopen PayPal / cancel". Success is shown only from a verified capture response.
 
-### M5 — Android screens
-- [ ] Chat home (bubbles, suggested prompts, typing indicator, inline product cards)
-- [ ] Product discovery (grid, compare, add to cart, availability)
-- [ ] Smart cart (qty, remove/replace, budget bar & warning, AI suggestions)
-- [ ] Checkout (summary, explicit approval, Custom Tab, loading/error/cancel)
-- [ ] Success (order ID, capture ID, items, total)
-- [ ] Deep-link handling + resume fallback
-- [ ] ViewModel unit tests
+### M5 — Android screens ✅ (code complete; on-device run pending, see below)
+- [x] Data layer: DTOs for every endpoint, domain models + mappers, repositories (Product/Cart/Agent/Payment/System), `safeApiCall` parses the backend error envelope into `AppResult.Failure(message, code, details)`, 120 s read timeout for agent turns
+- [x] Shared cart state: `CartRepository.cart: StateFlow` updated by REST calls *and* agent replies (badge, cart and checkout always agree)
+- [x] Session id + pending PayPal order persisted in SharedPreferences (`PrefsSessionStore`)
+- [x] **Home / AI chat:** welcome, 4 suggested prompts, user/assistant bubbles, animated typing indicator, agent action ticks, grounded product-card carousel, cart summary pill, retryable error bubbles, new-conversation button, backend status in the top bar, product detail sheet with direct add
+- [x] **Product discovery:** debounced search, category chips, adaptive grid with image/rating/price/stock, add to cart, detail sheet, compare mode (2–3 products) → comparison sheet with Cheapest / Top rated / Best value badges, unique and shared features
+- [x] **Smart cart:** quantity stepper, remove, budget card (progress, remaining/over, warning), set/clear budget dialog, per-item "swap and save" suggestions (replace), "Ask CartPilot to optimize" (hands a prompt to the chat), checkout bar, empty/error/loading states
+- [x] **Checkout:** itemized summary, budget note, explicit approval checkbox → Pay with PayPal (Chrome Custom Tab), states for creating / awaiting approval / capturing / cancelled / not completed / declined / failed with retry; `cart_changed` refreshes and requires re-approval
+- [x] **Success:** animated confirmation, status, order ID, PayPal capture ID, payer, items, total; only from a backend-verified receipt
+- [x] Deep links: `cartpilot://payment/{return|cancel}` (singleTask, `onNewIntent` and cold start) → `AppEvents` → NavHost routes to Checkout → backend capture. Resume fallback via order status; guarded against double capture
+- [x] Tests: 6 Home + 11 Checkout ViewModel tests, 7 API contract tests decoding real backend responses (`backend/scripts/export_api_fixtures.py` → `app/src/test/resources/fixtures`). 24 Android tests; `assembleDebug` and `lintDebug` pass
+- [ ] Run on a device/emulator against the live backend (this PC has no system image or emulator hypervisor driver)
 
 ### M6 — Deploy & end-to-end
 - [ ] Render deployment (render.yaml), env vars, HTTPS public URL

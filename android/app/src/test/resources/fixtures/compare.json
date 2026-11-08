@@ -1,0 +1,126 @@
+{
+  "products": [
+    {
+      "product": {
+        "id": "kb-003",
+        "name": "Forge TKL Mechanical Keyboard (Brown Switches)",
+        "brand": "Forge",
+        "category": "keyboards",
+        "description": "Tenkeyless mechanical keyboard with tactile brown switches, PBT keycaps and a detachable USB-C cable.",
+        "price": 89.99,
+        "currency": "USD",
+        "rating": 4.6,
+        "review_count": 2140,
+        "image_url": "http://10.0.2.2:8000/static/products/kb-003.jpg",
+        "stock_status": "in_stock",
+        "features": [
+          "mechanical",
+          "tactile",
+          "tenkeyless",
+          "pbt-keycaps",
+          "wired",
+          "usb-c"
+        ],
+        "tags": [
+          "typing",
+          "enthusiast",
+          "office"
+        ]
+      },
+      "value_score": 4.85,
+      "unique_features": [
+        "pbt-keycaps",
+        "tactile",
+        "tenkeyless",
+        "usb-c",
+        "wired"
+      ]
+    },
+    {
+      "product": {
+        "id": "kb-005",
+        "name": "Keyline K84 Compact Wireless Mechanical Keyboard",
+        "brand": "Keyline",
+        "category": "keyboards",
+        "description": "75% wireless mechanical keyboard with low-latency 2.4 GHz, Bluetooth for three devices and Mac/Windows keycaps.",
+        "price": 79.99,
+        "currency": "USD",
+        "rating": 4.5,
+        "review_count": 1930,
+        "image_url": "http://10.0.2.2:8000/static/products/kb-005.jpg",
+        "stock_status": "in_stock",
+        "features": [
+          "mechanical",
+          "wireless",
+          "bluetooth",
+          "compact",
+          "75-percent",
+          "multi-device",
+          "mac-compatible"
+        ],
+        "tags": [
+          "office",
+          "productivity",
+          "typing"
+        ]
+      },
+      "value_score": 5.03,
+      "unique_features": [
+        "75-percent",
+        "bluetooth",
+        "compact",
+        "mac-compatible",
+        "multi-device",
+        "wireless"
+      ]
+    },
+    {
+      "product": {
+        "id": "kb-006",
+        "name": "Nightfall RGB Full-Size Mechanical Keyboard",
+        "brand": "Nightfall",
+        "category": "keyboards",
+        "description": "Full-size gaming keyboard with per-key RGB, red linear switches, media dial and magnetic wrist rest.",
+        "price": 129.99,
+        "currency": "USD",
+        "rating": 4.4,
+        "review_count": 3302,
+        "image_url": "http://10.0.2.2:8000/static/products/kb-006.jpg",
+        "stock_status": "in_stock",
+        "features": [
+          "mechanical",
+          "linear",
+          "rgb",
+          "full-size",
+          "wrist-rest",
+          "media-controls",
+          "wired"
+        ],
+        "tags": [
+          "gaming",
+          "premium"
+        ]
+      },
+      "value_score": 3.86,
+      "unique_features": [
+        "full-size",
+        "linear",
+        "media-controls",
+        "rgb",
+        "wired",
+        "wrist-rest"
+      ]
+    }
+  ],
+  "shared_features": [
+    "mechanical"
+  ],
+  "cheapest_id": "kb-005",
+  "highest_rated_id": "kb-003",
+  "best_value_id": "kb-005",
+  "price_range": [
+    79.99,
+    129.99
+  ],
+  "summary": "Keyline K84 Compact Wireless Mechanical Keyboard is the cheapest at $79.99. Forge TKL Mechanical Keyboard (Brown Switches) has the highest rating (4.6/5 from 2140 reviews)."
+}

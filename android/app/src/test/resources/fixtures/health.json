@@ -1,0 +1,11 @@
+{
+  "status": "ok",
+  "service": "CartPilot AI",
+  "version": "0.1.0",
+  "environment": "development",
+  "timestamp": "2026-11-08T14:21:12.902256Z",
+  "checks": {
+    "gemini_configured": true,
+    "paypal_configured": true
+  }
+}

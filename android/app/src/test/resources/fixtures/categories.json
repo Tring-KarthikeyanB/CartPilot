@@ -1,0 +1,37 @@
+[
+  {
+    "id": "keyboards",
+    "label": "Keyboards",
+    "product_count": 7
+  },
+  {
+    "id": "mice",
+    "label": "Mice",
+    "product_count": 4
+  },
+  {
+    "id": "headphones",
+    "label": "Headphones",
+    "product_count": 7
+  },
+  {
+    "id": "laptop_stands",
+    "label": "Laptop stands",
+    "product_count": 5
+  },
+  {
+    "id": "monitors",
+    "label": "Monitors",
+    "product_count": 5
+  },
+  {
+    "id": "webcams",
+    "label": "Webcams",
+    "product_count": 4
+  },
+  {
+    "id": "desk_accessories",
+    "label": "Desk accessories",
+    "product_count": 5
+  }
+]

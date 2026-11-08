@@ -119,6 +119,25 @@ Requirements: Android Studio (recent, bundles JDK 25) and Android SDK 36.
 
 Command line: `cd android && ./gradlew assembleDebug testDebugUnitTest`
 
+### App screens
+
+| Screen | What it does |
+|---|---|
+| **AI Shopping Home** | Chat with the agent. Includes suggested prompts, a typing indicator, product-card carousels grounded in the catalogue, a note of the actions the agent took ("Added …"), and a live cart summary. |
+| **Product Discovery** | Search and filter by category, view product details, add to cart, and compare 2–3 products (cheapest, top rated, best value). |
+| **Smart Cart** | Change quantities, remove items, see budget progress and over-budget warnings, apply one-tap cheaper swaps, or ask the AI to optimize the cart. |
+| **Checkout** | Itemized summary, then an explicit approval checkbox, then PayPal in a Chrome Custom Tab. Handles cancelled, not-approved, declined and failed payments, and refuses to proceed if the cart total changed. |
+| **Payment Success** | Order ID, PayPal capture ID, items and total. Shown only from a receipt the backend has verified. |
+
+### Testing the full flow on a phone
+
+1. Start the backend with `--host 0.0.0.0`.
+2. Connect the phone over USB, run `adb reverse tcp:8000 tcp:8000`, and set `cartpilot.apiBaseUrl=http://localhost:8000/` in `android/local.properties`.
+3. Run the app. Ask for a home office setup, open the cart, and check out.
+4. In the Custom Tab, log in with your **sandbox personal** account and pay. The return page reopens CartPilot, which captures the payment and shows the receipt.
+
+The API contract tests decode real backend responses stored in `app/src/test/resources/fixtures`. Regenerate them after changing the API with `cd backend && python scripts/export_api_fixtures.py`.
+
 ## License
 
 [MIT](LICENSE)

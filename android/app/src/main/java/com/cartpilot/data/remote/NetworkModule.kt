@@ -19,8 +19,9 @@ object NetworkModule {
     private val okHttp: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
-            // Agent turns call the LLM and may run several tool calls; allow generous read time.
-            .readTimeout(60, TimeUnit.SECONDS)
+            // Agent turns call the LLM several times and may wait out rate limits (10-40 s typical).
+            .readTimeout(120, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })

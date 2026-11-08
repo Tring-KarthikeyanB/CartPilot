@@ -1,0 +1,15 @@
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "Request validation failed.",
+    "details": [
+      {
+        "loc": [
+          "body",
+          "quantity"
+        ],
+        "msg": "Input should be less than or equal to 10"
+      }
+    ]
+  }
+}

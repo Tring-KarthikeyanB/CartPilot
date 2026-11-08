@@ -1,0 +1,123 @@
+{
+  "session_id": "fixture-session-01",
+  "reply": "Added Halo ANC Wireless Headphones ($149.99) and Keyline K84 Compact Wireless Mechanical Keyboard ($79.99).",
+  "products": [
+    {
+      "id": "hp-003",
+      "name": "Halo ANC Wireless Headphones",
+      "brand": "Halo",
+      "category": "headphones",
+      "description": "Active noise-cancelling over-ear headphones with 40-hour battery, multipoint Bluetooth and beamforming mics for calls.",
+      "price": 149.99,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 2480,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-003.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "noise-cancelling",
+        "over-ear",
+        "microphone",
+        "multipoint",
+        "long-battery"
+      ],
+      "tags": [
+        "office",
+        "calls",
+        "travel"
+      ]
+    },
+    {
+      "id": "kb-005",
+      "name": "Keyline K84 Compact Wireless Mechanical Keyboard",
+      "brand": "Keyline",
+      "category": "keyboards",
+      "description": "75% wireless mechanical keyboard with low-latency 2.4 GHz, Bluetooth for three devices and Mac/Windows keycaps.",
+      "price": 79.99,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 1930,
+      "image_url": "http://10.0.2.2:8000/static/products/kb-005.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "mechanical",
+        "wireless",
+        "bluetooth",
+        "compact",
+        "75-percent",
+        "multi-device",
+        "mac-compatible"
+      ],
+      "tags": [
+        "office",
+        "productivity",
+        "typing"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "tool": "validate_budget",
+      "ok": true,
+      "summary": "Cart subtotal $0.00 is within the $500.00 budget ($500.00 left)."
+    },
+    {
+      "tool": "search_products",
+      "ok": true,
+      "summary": "Searched headphones: 5 found"
+    },
+    {
+      "tool": "add_to_cart",
+      "ok": true,
+      "summary": "Added Halo ANC Wireless Headphones"
+    },
+    {
+      "tool": "add_to_cart",
+      "ok": true,
+      "summary": "Added Keyline K84 Compact Wireless Mechanical Keyboard"
+    }
+  ],
+  "cart": {
+    "session_id": "fixture-session-01",
+    "items": [
+      {
+        "product_id": "hp-003",
+        "name": "Halo ANC Wireless Headphones",
+        "category": "headphones",
+        "image_url": "http://10.0.2.2:8000/static/products/hp-003.jpg",
+        "stock_status": "in_stock",
+        "unit_price": 149.99,
+        "quantity": 1,
+        "line_total": 149.99
+      },
+      {
+        "product_id": "kb-005",
+        "name": "Keyline K84 Compact Wireless Mechanical Keyboard",
+        "category": "keyboards",
+        "image_url": "http://10.0.2.2:8000/static/products/kb-005.jpg",
+        "stock_status": "in_stock",
+        "unit_price": 79.99,
+        "quantity": 1,
+        "line_total": 79.99
+      }
+    ],
+    "item_count": 2,
+    "subtotal": 229.98,
+    "currency": "USD",
+    "budget": 500.0,
+    "budget_remaining": 270.02,
+    "over_budget": false
+  },
+  "cart_updated": true,
+  "budget": {
+    "budget": 500.0,
+    "subtotal": 0.0,
+    "remaining": 500.0,
+    "within_budget": true,
+    "overage": 0.0,
+    "suggestions": [],
+    "message": "Cart subtotal $0.00 is within the $500.00 budget ($500.00 left)."
+  }
+}

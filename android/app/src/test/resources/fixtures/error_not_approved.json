@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "payment_not_approved",
+    "message": "The payment hasn't been approved in PayPal yet.",
+    "details": {
+      "approve_url": "https://www.sandbox.paypal.com/checkoutnow?token=ORDER00001TEST"
+    }
+  }
+}

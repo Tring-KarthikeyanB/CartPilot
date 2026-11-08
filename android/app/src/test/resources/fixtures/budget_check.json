@@ -1,0 +1,26 @@
+{
+  "budget": 200.0,
+  "subtotal": 229.98,
+  "remaining": -29.98,
+  "within_budget": false,
+  "overage": 29.98,
+  "suggestions": [
+    {
+      "replace_product_id": "hp-003",
+      "replace_name": "Halo ANC Wireless Headphones",
+      "with_product_id": "hp-006",
+      "with_name": "AirLite True Wireless Earbuds",
+      "with_rating": 4.5,
+      "savings": 60.0
+    },
+    {
+      "replace_product_id": "kb-005",
+      "replace_name": "Keyline K84 Compact Wireless Mechanical Keyboard",
+      "with_product_id": "kb-001",
+      "with_name": "Aurora K2 Low-Profile Wireless Keyboard",
+      "with_rating": 4.5,
+      "savings": 30.0
+    }
+  ],
+  "message": "Cart subtotal $229.98 is $29.98 over the $200.00 budget. Swapping to the suggested alternatives could save up to $90.00."
+}

@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "product_not_found",
+    "message": "Product 'zz-000' does not exist in the catalogue."
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "items": [
+    {
+      "id": "hp-004",
+      "name": "Quietude XM Noise-Cancelling Headphones",
+      "brand": "Quietude",
+      "category": "headphones",
+      "description": "Flagship adaptive noise cancelling, spatial audio, 30-hour battery and plush memory-foam cushions.",
+      "price": 279.99,
+      "currency": "USD",
+      "rating": 4.8,
+      "review_count": 5120,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-004.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "noise-cancelling",
+        "over-ear",
+        "microphone",
+        "multipoint",
+        "spatial-audio"
+      ],
+      "tags": [
+        "premium",
+        "travel",
+        "office"
+      ]
+    },
+    {
+      "id": "hp-003",
+      "name": "Halo ANC Wireless Headphones",
+      "brand": "Halo",
+      "category": "headphones",
+      "description": "Active noise-cancelling over-ear headphones with 40-hour battery, multipoint Bluetooth and beamforming mics for calls.",
+      "price": 149.99,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 2480,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-003.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "noise-cancelling",
+        "over-ear",
+        "microphone",
+        "multipoint",
+        "long-battery"
+      ],
+      "tags": [
+        "office",
+        "calls",
+        "travel"
+      ]
+    },
+    {
+      "id": "hp-001",
+      "name": "Studio Monitor Wired Headphones",
+      "brand": "Sonance",
+      "category": "headphones",
+      "description": "Closed-back studio headphones with flat, accurate sound, swivel ear cups and a 3 m coiled cable.",
+      "price": 39.99,
+      "currency": "USD",
+      "rating": 4.4,
+      "review_count": 3650,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-001.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wired",
+        "closed-back",
+        "over-ear",
+        "studio-sound"
+      ],
+      "tags": [
+        "budget",
+        "music",
+        "recording"
+      ]
+    },
+    {
+      "id": "hp-005",
+      "name": "Vibe Wireless Over-Ear Headphones",
+      "brand": "Vibe",
+      "category": "headphones",
+      "description": "Bass-forward wireless over-ear headphones with 50-hour battery and a built-in mic.",
+      "price": 69.99,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 1890,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-005.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "over-ear",
+        "microphone",
+        "long-battery"
+      ],
+      "tags": [
+        "music",
+        "value"
+      ]
+    },
+    {
+      "id": "hp-002",
+      "name": "Pulse On-Ear Headphones",
+      "brand": "Pulse",
+      "category": "headphones",
+      "description": "Lightweight on-ear headphones with inline mic and foldable steel headband.",
+      "price": 24.99,
+      "currency": "USD",
+      "rating": 4.0,
+      "review_count": 980,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-002.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wired",
+        "on-ear",
+        "microphone",
+        "foldable"
+      ],
+      "tags": [
+        "budget",
+        "calls"
+      ]
+    },
+    {
+      "id": "hp-006",
+      "name": "AirLite True Wireless Earbuds",
+      "brand": "AirLite",
+      "category": "headphones",
+      "description": "In-ear earbuds with active noise cancelling, transparency mode and wireless charging case.",
+      "price": 89.99,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 3340,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-006.jpg",
+      "stock_status": "low_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "noise-cancelling",
+        "in-ear",
+        "microphone",
+        "wireless-charging"
+      ],
+      "tags": [
+        "travel",
+        "calls"
+      ]
+    },
+    {
+      "id": "hp-007",
+      "name": "Buds Duo Wireless Earbuds",
+      "brand": "Duo",
+      "category": "headphones",
+      "description": "Everyday wireless earbuds with clear call mics, IPX4 sweat resistance and 24-hour total battery.",
+      "price": 49.99,
+      "currency": "USD",
+      "rating": 4.2,
+      "review_count": 1420,
+      "image_url": "http://10.0.2.2:8000/static/products/hp-007.jpg",
+      "stock_status": "in_stock",
+      "features": [
+        "wireless",
+        "bluetooth",
+        "in-ear",
+        "microphone",
+        "water-resistant"
+      ],
+      "tags": [
+        "budget",
+        "calls",
+        "fitness"
+      ]
+    }
+  ],
+  "total": 7
+}
