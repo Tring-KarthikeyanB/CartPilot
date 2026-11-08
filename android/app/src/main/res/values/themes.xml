@@ -1,0 +1,7 @@
+<resources>
+    <!-- Window theme only; all UI styling lives in Compose (ui/theme). -->
+    <style name="Theme.CartPilot" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/cp_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>
