@@ -49,6 +49,10 @@ android {
         compose = true
         buildConfig = true
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -76,4 +80,23 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    // JVM screenshot tests (Robolectric + Roborazzi): render real Compose screens to docs/screenshots
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+// Screenshot tests are slow and write files: run them only with
+//   ./gradlew testDebugUnitTest -PrecordScreenshots --tests "*ScreenshotTest*"
+tasks.withType<Test>().configureEach {
+    if (project.hasProperty("recordScreenshots")) {
+        systemProperty("roborazzi.test.record", "true")
+        maxHeapSize = "2g"
+    } else {
+        exclude("**/*ScreenshotTest*")
+    }
 }

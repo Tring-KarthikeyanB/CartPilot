@@ -91,7 +91,18 @@ fun ProductsRoute(
             viewModel.noticeShown()
         }
     }
+    ProductsScreen(state, viewModel, onBack, onOpenCart, snackbar)
+}
 
+@Composable
+fun ProductsScreen(
+    state: ProductsUiState,
+    actions: ProductsActions,
+    onBack: () -> Unit,
+    onOpenCart: () -> Unit,
+    snackbar: SnackbarHostState = remember { SnackbarHostState() },
+) {
+    val viewModel = actions
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(snackbar) },

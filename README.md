@@ -2,25 +2,64 @@
 
 **Your personal AI shopping agent. From intent to checkout.**
 
-Tell CartPilot what you need ("a home office setup under $500: keyboard, mouse, headphones, laptop stand"). The agent searches a real catalogue, compares options, builds a budget-optimised cart you can refine by chatting, and checks out through **PayPal Sandbox**. It shows success only after the backend has verified the capture with PayPal.
+Tell CartPilot what you need, for example *"a home office setup under $500: keyboard, mouse, headphones and laptop stand."*
 
-> Status: under active development for the hackathon (deadline 2026-11-12). See [docs/PLAN.md](docs/PLAN.md) for the milestone checklist. This README only describes features that are implemented.
+1. A Gemini-powered agent searches a real product catalogue, compares options and builds a cart that fits your budget.
+2. You refine the cart by chatting.
+3. You check out with **PayPal** (Sandbox) after explicitly approving the payment.
 
-## Stack
+The app shows "Payment successful" only after the backend has captured the order with PayPal and verified the amount.
 
-| Layer | Tech |
-|---|---|
-| Android | Kotlin, Jetpack Compose, Material 3, MVVM + repositories, StateFlow, Navigation Compose, Retrofit + kotlinx.serialization, Coil, Chrome Custom Tabs |
-| Backend | Python 3.12, FastAPI, Pydantic v2, httpx |
-| AI | Gemini API with function calling (behind a provider interface) |
-| Payments | PayPal Orders API v2 (Sandbox) |
+Android (Kotlin · Jetpack Compose) · FastAPI · Gemini function calling · PayPal Orders v2 · MIT license
+
+| AI chat | Agent-built cart | Discover | Compare |
+|---|---|---|---|
+| <img src="docs/screenshots/01-home.png" width="200"> | <img src="docs/screenshots/02-agent-chat.png" width="200"> | <img src="docs/screenshots/03-discover.png" width="200"> | <img src="docs/screenshots/04-compare.png" width="200"> |
+
+| Smart cart | Checkout | PayPal approval | Verified success |
+|---|---|---|---|
+| <img src="docs/screenshots/05-smart-cart.png" width="200"> | <img src="docs/screenshots/06-checkout.png" width="200"> | <img src="docs/screenshots/07-paypal-approval.png" width="200"> | <img src="docs/screenshots/08-success.png" width="200"> |
+
+<sub>Screens rendered from the app's real Compose code with Robolectric and Roborazzi (`ScreenshotTest`):
+
+- **Catalogue, cart, budget and comparison data:** real backend responses.
+- **Chat reply:** the text Gemini produced in a live test.
+- **Receipt:** comes from the test PayPal fake (order `ORDER00001TEST`).</sub>
+
+## Highlights
+
+- **Agentic shopping with real tools.** Gemini function calling drives seven backend tools: `search_products`, `compare_products`, `add_to_cart`, `remove_from_cart`, `replace_product`, `get_cart_summary` and `validate_budget`. One sentence produces a budgeted, explained cart. Follow-ups like *"replace my headphones with something cheaper and keep it under $450"* edit it.
+- **Grounded by design.** Products, prices and stock come only from the catalogue. Strict schemas validate every tool argument, and a model-supplied price is rejected. Product cards appear only for items the tools returned *and* the reply names.
+- **The backend owns the money.** Totals use exact decimal arithmetic on the server. The PayPal order amount comes from the server cart, and checkout refuses a stale client total.
+- **The AI can't pay.** There is no payment tool. The user ticks an approval box, then approves again on PayPal.
+- **Verified PayPal checkout.** The backend captures the order with PayPal and checks the order ID, capture status, amount and currency. Capture is idempotent. Cancelled, declined, pending and closed-tab cases each have their own path, and when the app resumes it checks the order's status in case the deep link never arrived.
+- **Resilient AI.** Short rate limits are retried using the server's `retryDelay`. If a model's daily quota runs out, the backend falls back across Gemini models. The LLM sits behind a provider interface, so another vendor can be added without changing the shopping workflow.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    App["Android app<br/>Compose · MVVM · StateFlow"] -- HTTPS JSON --> API["FastAPI /api/v1"]
+    API --> Agent["Agent loop<br/>7 validated tools"]
+    Agent -- function calling --> Gemini["Gemini"]
+    Agent --> Catalog["Catalogue<br/>37 products"]
+    Agent --> Cart["Cart + budget<br/>Decimal totals"]
+    API --> Pay["Payments<br/>create · capture · verify"]
+    Pay -- Orders v2 --> PayPal["PayPal Sandbox"]
+    App -- Custom Tab --> PayPal
+    PayPal -- return_url --> API -- "cartpilot:// deep link" --> App
+```
+
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) has the detailed component diagram, a sequence diagram of one agent turn, and the checkout and verification sequence.
 
 ## Repository layout
 
 ```
 android/   Android app (open this folder in Android Studio)
-backend/   FastAPI backend
-docs/      Plan, architecture, demo material
+backend/   FastAPI backend: app/{api,core,schemas,services,repositories}, seed/, static/, tests/
+docs/      Plan, architecture, deployment, demo script, Devpost text, screenshots
+render.yaml            Render Blueprint (backend deployment)
+.github/workflows/     CI: backend tests + Android build/tests/lint
 ```
 
 ## Run the backend locally
@@ -32,7 +71,7 @@ cd backend
 python -m venv .venv
 # Windows: .venv\Scripts\activate    macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env        # then fill in keys (optional for the health check)
+cp .env.example .env        # then fill in your keys (see below)
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -40,14 +79,30 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - Interactive API docs: http://localhost:8000/docs
 - Tests: `python -m pytest -q`
 
-### API (implemented so far)
+### Environment variables
+
+| Variable | Purpose |
+|---|---|
+| `ENVIRONMENT` | `development` / `production` |
+| `GEMINI_API_KEY` | Gemini API key ([AI Studio](https://aistudio.google.com/app/apikey)). The free tier allows only about 20 requests per day per model, so enable billing for demos. |
+| `GEMINI_MODEL` | Primary model (default `gemini-3.5-flash`) |
+| `GEMINI_FALLBACK_MODELS` | Models to try when the primary is rate-limited (default `gemini-3.5-flash-lite,gemini-3.1-flash-lite`) |
+| `AI_TIMEOUT_SECONDS` | Timeout per model request (default 60) |
+| `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | PayPal **Sandbox** REST app credentials |
+| `PAYPAL_BASE_URL` | `https://api-m.sandbox.paypal.com` |
+| `PUBLIC_BASE_URL` | Public HTTPS URL of the backend, used for PayPal return/cancel. Leave it empty locally (the URL the app called is used); on Render it comes from `RENDER_EXTERNAL_URL` automatically. |
+| `ANDROID_DEEP_LINK` | `cartpilot://payment` |
+
+Secrets live only on the backend. `/health` reports whether each integration is configured, never the values.
+
+### API
 
 All routes are under `/api/v1`. Errors use one shape: `{"error": {"code": "...", "message": "...", "details": ...}}`.
 
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/health` | Liveness check. Shows whether Gemini and PayPal are configured. |
-| GET | `/products?q=&category=&min_price=&max_price=&min_rating=&in_stock=&sort=&limit=` | Search the catalogue. `sort` is one of `relevance`, `price_asc`, `price_desc`, `rating`. |
+| GET | `/health` | Liveness check, plus which integrations are configured |
+| GET | `/products?q=&category=&min_price=&max_price=&min_rating=&in_stock=&sort=&limit=` | Search the catalogue (`sort`: `relevance`, `price_asc`, `price_desc`, `rating`) |
 | GET | `/products/categories` | Categories with product counts |
 | GET | `/products/compare?ids=kb-003,kb-005` | Compare 2–5 products |
 | GET | `/products/{id}` | One product |
@@ -57,90 +112,64 @@ All routes are under `/api/v1`. Errors use one shape: `{"error": {"code": "...",
 | POST | `/cart/{session_id}/replace` | `{"old_product_id", "new_product_id"}` |
 | PUT | `/cart/{session_id}/budget` | `{"amount": 500}` sets a budget; `null` clears it |
 | GET | `/cart/{session_id}/budget-check?budget=` | Within-budget check plus cheaper-swap suggestions |
-| POST | `/agent/chat` | `{"session_id", "message"}` → agent reply, product cards, actions taken, updated cart, budget status |
+| POST | `/agent/chat` | `{"session_id", "message"}` → agent reply, product cards, actions taken, cart, budget |
 | DELETE | `/agent/sessions/{session_id}` | Reset the conversation (the cart is kept) |
-
 | POST | `/payments/create-order` | `{"session_id", "expected_total", "user_confirmed": true}` → PayPal `order_id` and `approve_url` |
-| POST | `/payments/capture-order` | `{"session_id", "order_id"}` → captures with PayPal and returns a verified receipt (idempotent) |
-| GET | `/payments/orders/{order_id}?session_id=` | Status from PayPal (`can_capture` when the buyer has approved) |
-| GET | `/payments/paypal/return`, `/payments/paypal/cancel` | Pages PayPal redirects the browser to; they hand control back to the app |
+| POST | `/payments/capture-order` | `{"session_id", "order_id"}` → captures and verifies with PayPal, returns a receipt (idempotent) |
+| GET | `/payments/orders/{order_id}?session_id=` | Status from PayPal (`can_capture` once the buyer approves) |
+| GET | `/payments/paypal/return`, `/payments/paypal/cancel` | Pages PayPal redirects to; they hand control back to the app and never capture |
 
 ### PayPal Sandbox checkout
 
-1. The app shows the order summary. The user explicitly approves, and the app sends `create-order` with the total they saw. The backend recomputes the total from its own cart and refuses if the two don't match. It then creates a PayPal Orders v2 order (`intent=CAPTURE`) for the **server-computed** amount.
-2. The app opens `approve_url` in a Chrome Custom Tab. After approving or cancelling, PayPal redirects to the backend's `/payments/paypal/return` or `/payments/paypal/cancel`. That page sends the user back to the app via `intent://` or `cartpilot://payment/...`.
-3. The app calls `capture-order`. The backend captures with PayPal and checks the order ID, the `COMPLETED` status, and that the captured amount and currency match the order. Only then does it return a receipt. A deep link on its own never counts as payment.
-4. If the redirect never reaches the app (for example, the user closed the tab), the app checks `GET /payments/orders/{id}` when it resumes and captures if PayPal reports `APPROVED`.
+1. The user ticks the approval box and taps **Pay**. The app sends `create-order` with the total it showed. The backend recomputes the total from its own cart and refuses if the two don't match. It then creates an Orders v2 order (`intent=CAPTURE`) for the **server-computed** amount.
+2. The app opens `approve_url` in a Chrome Custom Tab. After approving or cancelling, PayPal redirects to the backend's return or cancel page. That page sends the user back to the app via `intent://` or `cartpilot://payment/...`.
+3. The app calls `capture-order`. The backend captures and verifies the order ID, `COMPLETED` status, amount and currency, then returns a receipt. A deep link on its own never counts as payment.
+4. If the redirect never arrives, the app checks `GET /payments/orders/{id}` when it resumes and captures if PayPal reports `APPROVED`.
 
-**To test in Sandbox:** create a REST app at [developer.paypal.com](https://developer.paypal.com/dashboard/applications/sandbox) and put its client ID and secret in `backend/.env`. Then pay with the **personal** sandbox account under *Sandbox → Accounts* (log in with its email and system-generated password). No real money moves.
-
-### The AI agent
-
-`POST /agent/chat` runs a tool-calling loop with Gemini, capped at 8 model steps per message. The model can only use these seven tools:
-
-- `search_products`
-- `compare_products`
-- `add_to_cart`
-- `remove_from_cart`
-- `replace_product`
-- `get_cart_summary`
-- `validate_budget`
-
-The backend validates every tool argument against a strict schema, and the session ID is bound on the server, so the model can't touch another user's cart. Prices and totals always come from the catalogue and cart services. There is **no payment tool**: payment happens only when the user taps Checkout and approves the payment in PayPal.
-
-The LLM vendor sits behind `LLMProvider` (`backend/app/services/ai/provider.py`), so another provider can be added without changing the shopping workflow. If the primary Gemini model hits its rate limit, the backend automatically falls back to cheaper models.
-
-The catalogue (`backend/seed/products.json`) is the only source of products and prices. The backend computes all totals with exact decimal arithmetic and ignores any prices a client sends. Product images are served from `/static/products/`; see [image credits](docs/IMAGE_CREDITS.md).
-
-### Environment variables
-
-| Variable | Purpose |
-|---|---|
-| `ENVIRONMENT` | `development` / `production` |
-| `GEMINI_API_KEY` | Gemini API key ([AI Studio](https://aistudio.google.com/app/apikey)). The free tier allows only about 20 requests per day per model, so enable billing for demos. |
-| `GEMINI_MODEL` | Primary model (default `gemini-3.5-flash`) |
-| `GEMINI_FALLBACK_MODELS` | Comma-separated models to try when the primary is rate-limited (default `gemini-3.5-flash-lite,gemini-3.1-flash-lite`) |
-| `AI_TIMEOUT_SECONDS` | Timeout per model request (default 60) |
-| `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | PayPal Sandbox REST app credentials |
-| `PAYPAL_BASE_URL` | `https://api-m.sandbox.paypal.com` |
-| `PUBLIC_BASE_URL` | Public HTTPS URL of the deployed backend, used for PayPal return/cancel. Leave it empty locally to use the URL the app called (e.g. `http://10.0.2.2:8000`). |
-| `ANDROID_DEEP_LINK` | `cartpilot://payment` |
-
-The app never sends secrets to Android. `/health` reports only whether each integration is configured.
+**Sandbox setup:** create a REST app at [developer.paypal.com](https://developer.paypal.com/dashboard/applications/sandbox) and put its client ID and secret in `backend/.env`. Pay with the **personal** sandbox account under *Sandbox → Accounts*. No real money moves.
 
 ## Run the Android app
 
-Requirements: Android Studio (recent, bundles JDK 25) and Android SDK 36.
+Requirements: Android Studio (recent, bundles JDK 25) and Android SDK 36. The app runs on Android 8.0 (API 26) and up.
 
 1. Open the `android/` folder in Android Studio and let Gradle sync.
 2. Start the backend (above).
-3. Run the `app` configuration on an emulator. The default backend URL is `http://10.0.2.2:8000/`, which is the host machine as seen from the emulator.
-4. On a physical device, either run `adb reverse tcp:8000 tcp:8000` and add `cartpilot.apiBaseUrl=http://localhost:8000/` to `android/local.properties`, or point it at the deployed HTTPS backend.
+3. **Emulator:** run the `app` configuration. Debug builds call `http://10.0.2.2:8000/`, which is your computer as seen from the emulator.
+4. **Physical phone:** run `adb reverse tcp:8000 tcp:8000` and add `cartpilot.apiBaseUrl=http://localhost:8000/` to `android/local.properties`.
+5. **Release APK** (calls the deployed HTTPS backend): `./gradlew assembleRelease`, which produces `app/build/outputs/apk/release/app-release.apk`.
 
-Command line: `cd android && ./gradlew assembleDebug testDebugUnitTest`
+## Testing
 
-### App screens
+| Suite | Command | What it covers |
+|---|---|---|
+| Backend (106 tests) | `cd backend && python -m pytest -q` | Catalogue integrity, search and compare, cart maths and budget, the agent loop with a scripted LLM (tool validation, errors, bounds), Gemini retries and fallback, and PayPal create, capture and verify (including mismatch, pending, declined, idempotency and cancel) against an in-memory fake PayPal |
+| Android (24 tests) | `cd android && ./gradlew testDebugUnitTest` | Chat and checkout ViewModels (every payment path, deep link vs. resume, no double capture), plus API contract tests that decode real backend responses |
+| Screenshots | `./gradlew testDebugUnitTest -PrecordScreenshots --tests "*ScreenshotTest*"` | Renders all screens to `docs/screenshots` |
+| CI | GitHub Actions | Backend tests + Android `assembleDebug testDebugUnitTest lintDebug` on every push |
 
-| Screen | What it does |
-|---|---|
-| **AI Shopping Home** | Chat with the agent. Includes suggested prompts, a typing indicator, product-card carousels grounded in the catalogue, a note of the actions the agent took ("Added …"), and a live cart summary. |
-| **Product Discovery** | Search and filter by category, view product details, add to cart, and compare 2–3 products (cheapest, top rated, best value). |
-| **Smart Cart** | Change quantities, remove items, see budget progress and over-budget warnings, apply one-tap cheaper swaps, or ask the AI to optimize the cart. |
-| **Checkout** | Itemized summary, then an explicit approval checkbox, then PayPal in a Chrome Custom Tab. Handles cancelled, not-approved, declined and failed payments, and refuses to proceed if the cart total changed. |
-| **Payment Success** | Order ID, PayPal capture ID, items and total. Shown only from a receipt the backend has verified. |
-
-### Testing the full flow on a phone
-
-1. Start the backend with `--host 0.0.0.0`.
-2. Connect the phone over USB, run `adb reverse tcp:8000 tcp:8000`, and set `cartpilot.apiBaseUrl=http://localhost:8000/` in `android/local.properties`.
-3. Run the app. Ask for a home office setup, open the cart, and check out.
-4. In the Custom Tab, log in with your **sandbox personal** account and pay. The return page reopens CartPilot, which captures the payment and shows the receipt.
-
-The API contract tests decode real backend responses stored in `app/src/test/resources/fixtures`. Regenerate them after changing the API with `cd backend && python scripts/export_api_fixtures.py`.
+Regenerate the API contract fixtures after changing the backend schemas: `cd backend && python scripts/export_api_fixtures.py`.
 
 ## Deployment
 
-The backend deploys to Render with the `render.yaml` Blueprint. Release builds of the app call `https://cartpilot-api.onrender.com/`. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the step-by-step guide, including cold starts and free-plan notes. CI runs the backend tests and the Android build, tests and lint on every push.
+The backend deploys to Render with the `render.yaml` Blueprint. Release builds call `https://cartpilot-api.onrender.com/`. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the steps, cold-start notes and free-plan limits.
+
+## Project status
+
+The backend, agent, PayPal integration and all five Android screens are implemented and covered by the tests above. Verified live so far:
+
+- Gemini agent conversations
+- PayPal Sandbox order creation
+- the error paths
+
+Still to do before submission: a full on-device run against the deployed backend, ending in a buyer-approved Sandbox capture. Progress is tracked in [docs/PLAN.md](docs/PLAN.md).
+
+## Docs
+
+- [Architecture and sequence diagrams](docs/ARCHITECTURE.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Demo script (under 3 minutes)](docs/DEMO_SCRIPT.md)
+- [Devpost description](docs/DEVPOST.md)
+- [Product image credits](docs/IMAGE_CREDITS.md)
 
 ## License
 

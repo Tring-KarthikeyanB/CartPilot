@@ -106,10 +106,15 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [ ] Create the Render Blueprint and enter secrets (Render account)
 - [ ] Verify the live `/api/v1/health`, then the full E2E on a device with the release APK and the Sandbox buyer
 
-### M7 — Submission
-- [ ] README (setup, env vars, sandbox testing), architecture diagram, screenshots
-- [ ] Demo script (<3 min), Devpost description
-- [ ] Public GitHub repo push; YouTube video (manual)
+### M7 — Submission (materials done; publishing pending)
+- [x] README rewrite: screenshots, highlights, Mermaid architecture, API (fixed a table broken by a blank line), checkout flow, setup, env vars, testing matrix, honest status
+- [x] `docs/ARCHITECTURE.md`: component diagram, agent-turn sequence, checkout/verification sequence, code map
+- [x] Screenshots: `ScreenshotTest` (Robolectric 4.17 + Roborazzi 1.78) renders all 8 key screens from the real Compose code (excluded from normal test runs; `-PrecordScreenshots`). This was also the first check that every screen composes, and it found the double-trash-icon stepper bug, now fixed
+- [x] Route/Screen split for Products/Cart/Checkout/Success (`*Actions` interfaces) so screens are stateless and previewable
+- [x] `docs/DEMO_SCRIPT.md` (2:45, timed shots + voice-over + pre-flight checklist)
+- [x] `docs/DEVPOST.md` (inspiration, what it does, how built, responsible design, challenges, accomplishments, learnings, next, built-with)
+- [ ] Replace screenshots with on-device captures after the live E2E (optional)
+- [ ] Push public repo, fill repo/video/API links in `docs/DEVPOST.md`, record and upload the YouTube video
 
 ## Credentials needed from the developer
 - Gemini API key (M3) — https://aistudio.google.com/app/apikey

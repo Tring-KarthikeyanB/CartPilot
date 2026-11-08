@@ -97,7 +97,17 @@ fun CheckoutRoute(
             viewModel.noticeShown()
         }
     }
+    CheckoutScreen(state, viewModel, onBack, snackbar)
+}
 
+@Composable
+fun CheckoutScreen(
+    state: CheckoutUiState,
+    actions: CheckoutActions,
+    onBack: () -> Unit,
+    snackbar: SnackbarHostState = remember { SnackbarHostState() },
+) {
+    val viewModel = actions
     val stage = state.stage
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -158,7 +168,7 @@ fun CheckoutRoute(
 }
 
 @Composable
-private fun NotCompletedState(stage: CheckoutStage.NotCompleted, viewModel: CheckoutViewModel) {
+private fun NotCompletedState(stage: CheckoutStage.NotCompleted, viewModel: CheckoutActions) {
     Column(Modifier.fillMaxSize()) {
         MessageState(
             icon = Icons.Outlined.CancelPresentation,

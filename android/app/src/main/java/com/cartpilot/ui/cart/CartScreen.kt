@@ -90,6 +90,20 @@ fun CartRoute(
             viewModel.noticeShown()
         }
     }
+    CartScreen(state, viewModel, onBack, onBrowse, onCheckout, onAskAgent, snackbar)
+}
+
+@Composable
+fun CartScreen(
+    state: CartUiState,
+    actions: CartActions,
+    onBack: () -> Unit,
+    onBrowse: () -> Unit,
+    onCheckout: () -> Unit,
+    onAskAgent: () -> Unit,
+    snackbar: SnackbarHostState = remember { SnackbarHostState() },
+) {
+    val viewModel = actions
     val cart = state.cart
 
     Scaffold(
@@ -283,8 +297,9 @@ private fun QuantityStepper(quantity: Int, enabled: Boolean, onIncrement: () -> 
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.small),
     ) {
-        IconButton(onClick = onDecrement, enabled = enabled, modifier = Modifier.size(34.dp)) {
-            Icon(if (quantity <= 1) Icons.Outlined.DeleteOutline else Icons.Outlined.Remove, "Decrease", modifier = Modifier.size(16.dp))
+        // Removing the line is the separate trash button; the stepper stops at 1.
+        IconButton(onClick = onDecrement, enabled = enabled && quantity > 1, modifier = Modifier.size(34.dp)) {
+            Icon(Icons.Outlined.Remove, "Decrease", modifier = Modifier.size(16.dp))
         }
         Text("$quantity", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(horizontal = 4.dp))
         IconButton(onClick = onIncrement, enabled = enabled && quantity < 10, modifier = Modifier.size(34.dp)) {

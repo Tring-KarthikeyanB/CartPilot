@@ -39,11 +39,24 @@ data class ProductsUiState(
     val cartCount: Int = 0,
 )
 
+/** User intents of the products screen (implemented by [ProductsViewModel]; no-op fakes in previews/screenshots). */
+interface ProductsActions {
+    fun onQueryChange(query: String)
+    fun onCategory(category: String?)
+    fun retry()
+    fun toggleCompareMode()
+    fun toggleCompare(product: Product)
+    fun compare()
+    fun dismissComparison()
+    fun selectProduct(product: Product?)
+    fun addToCart(product: Product)
+}
+
 class ProductsViewModel(
     initialCategory: String?,
     private val products: ProductRepository,
     private val carts: CartRepository,
-) : ViewModel() {
+) : ViewModel(), ProductsActions {
 
     private val _state = MutableStateFlow(ProductsUiState(category = initialCategory))
     val state: StateFlow<ProductsUiState> = _state.asStateFlow()
@@ -57,17 +70,17 @@ class ProductsViewModel(
         search(debounce = false)
     }
 
-    fun onQueryChange(query: String) {
+    override fun onQueryChange(query: String) {
         _state.update { it.copy(query = query.take(100)) }
         search(debounce = true)
     }
 
-    fun onCategory(category: String?) {
+    override fun onCategory(category: String?) {
         _state.update { it.copy(category = if (it.category == category) null else category) }
         search(debounce = false)
     }
 
-    fun retry() = search(debounce = false)
+    override fun retry() = search(debounce = false)
 
     private fun search(debounce: Boolean) {
         searchJob?.cancel()
@@ -84,9 +97,9 @@ class ProductsViewModel(
 
     // ---------- compare ----------
 
-    fun toggleCompareMode() = _state.update { it.copy(compareMode = !it.compareMode, compareIds = emptyList()) }
+    override fun toggleCompareMode() = _state.update { it.copy(compareMode = !it.compareMode, compareIds = emptyList()) }
 
-    fun toggleCompare(product: Product) = _state.update {
+    override fun toggleCompare(product: Product) = _state.update {
         val ids = when {
             product.id in it.compareIds -> it.compareIds - product.id
             it.compareIds.size >= MAX_COMPARE -> return@update it.copy(notice = "You can compare up to $MAX_COMPARE products")
@@ -95,7 +108,7 @@ class ProductsViewModel(
         it.copy(compareIds = ids)
     }
 
-    fun compare() {
+    override fun compare() {
         val ids = _state.value.compareIds
         if (ids.size < 2) return
         _state.update { it.copy(comparing = true) }
@@ -107,13 +120,13 @@ class ProductsViewModel(
         }
     }
 
-    fun dismissComparison() = _state.update { it.copy(comparison = null) }
+    override fun dismissComparison() = _state.update { it.copy(comparison = null) }
 
     // ---------- cart ----------
 
-    fun selectProduct(product: Product?) = _state.update { it.copy(selectedProduct = product) }
+    override fun selectProduct(product: Product?) = _state.update { it.copy(selectedProduct = product) }
 
-    fun addToCart(product: Product) {
+    override fun addToCart(product: Product) {
         _state.update { it.copy(addingId = product.id) }
         viewModelScope.launch {
             val result = carts.add(product.id)

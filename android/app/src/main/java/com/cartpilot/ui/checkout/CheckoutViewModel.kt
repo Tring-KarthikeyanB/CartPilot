@@ -60,11 +60,23 @@ data class CheckoutUiState(
  * explicitly approve; success is shown only after the backend captured AND verified the PayPal order.
  * A deep link back from PayPal only triggers that verification, it is never treated as payment.
  */
+/** User intents of the checkout screen (implemented by [CheckoutViewModel]). */
+interface CheckoutActions {
+    fun setApproved(approved: Boolean)
+    fun pay()
+    fun checkAgain()
+    fun retryCapture(orderId: String)
+    fun reopenPayPal()
+    fun startOver()
+    fun approvalText(cart: Cart): String =
+        "I approve paying ${formatUsd(cart.subtotal)} to CartPilot with PayPal (Sandbox, no real money)."
+}
+
 class CheckoutViewModel(
     private val carts: CartRepository,
     private val payments: PaymentRepository,
     private val events: AppEvents,
-) : ViewModel() {
+) : ViewModel(), CheckoutActions {
 
     private val _state = MutableStateFlow(CheckoutUiState(cart = carts.cart.value))
     val state: StateFlow<CheckoutUiState> = _state.asStateFlow()
@@ -95,9 +107,9 @@ class CheckoutViewModel(
 
     // ---------- review ----------
 
-    fun setApproved(approved: Boolean) = _state.update { it.copy(approved = approved) }
+    override fun setApproved(approved: Boolean) = _state.update { it.copy(approved = approved) }
 
-    fun pay() {
+    override fun pay() {
         val s = _state.value
         val cart = s.cart ?: return
         if (!s.canPay) return
@@ -146,7 +158,7 @@ class CheckoutViewModel(
         }
     }
 
-    fun checkAgain() {
+    override fun checkAgain() {
         currentOrderId()?.let(::checkStatus)
     }
 
@@ -187,7 +199,7 @@ class CheckoutViewModel(
         }
     }
 
-    fun retryCapture(orderId: String) = capture(orderId)
+    override fun retryCapture(orderId: String) = capture(orderId)
 
     private fun capture(orderId: String) {
         if (captureInFlight) return
@@ -230,7 +242,7 @@ class CheckoutViewModel(
 
     // ---------- user actions on non-review stages ----------
 
-    fun reopenPayPal() {
+    override fun reopenPayPal() {
         val stage = _state.value.stage
         val url = approveUrlOf(stage) ?: return
         val orderId = currentOrderId() ?: return
@@ -239,7 +251,7 @@ class CheckoutViewModel(
     }
 
     /** Give up on the current PayPal order (nothing was charged) and return to the review step. */
-    fun startOver() {
+    override fun startOver() {
         payments.clearPendingOrder()
         _state.update { it.copy(stage = CheckoutStage.Review, approved = false) }
         viewModelScope.launch { carts.refresh() }
@@ -262,9 +274,6 @@ class CheckoutViewModel(
         is CheckoutStage.NotCompleted -> stage.approveUrl
         else -> null
     }
-
-    fun approvalText(cart: Cart): String =
-        "I approve paying ${formatUsd(cart.subtotal)} to CartPilot with PayPal (Sandbox, no real money)."
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

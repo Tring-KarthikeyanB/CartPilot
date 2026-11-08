@@ -1,0 +1,42 @@
+{
+  "budget": 300.0,
+  "subtotal": 359.96,
+  "remaining": -59.96,
+  "within_budget": false,
+  "overage": 59.96,
+  "suggestions": [
+    {
+      "replace_product_id": "hp-003",
+      "replace_name": "Halo ANC Wireless Headphones",
+      "with_product_id": "hp-006",
+      "with_name": "AirLite True Wireless Earbuds",
+      "with_rating": 4.5,
+      "savings": 60.0
+    },
+    {
+      "replace_product_id": "kb-003",
+      "replace_name": "Forge TKL Mechanical Keyboard (Brown Switches)",
+      "with_product_id": "kb-001",
+      "with_name": "Aurora K2 Low-Profile Wireless Keyboard",
+      "with_rating": 4.5,
+      "savings": 40.0
+    },
+    {
+      "replace_product_id": "ls-002",
+      "replace_name": "Elevate Pro Adjustable Laptop Stand",
+      "with_product_id": "ls-001",
+      "with_name": "FoldUp Aluminium Laptop Stand",
+      "with_rating": 4.4,
+      "savings": 30.0
+    },
+    {
+      "replace_product_id": "ms-002",
+      "replace_name": "Precision Pro Ergonomic Mouse",
+      "with_product_id": "ms-003",
+      "with_name": "FeatherLite 58g Gaming Mouse",
+      "with_rating": 4.5,
+      "savings": 10.0
+    }
+  ],
+  "message": "Cart subtotal $359.96 is $59.96 over the $300.00 budget. Swapping to the suggested alternatives could save up to $140.00."
+}

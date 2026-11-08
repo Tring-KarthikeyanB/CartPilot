@@ -49,7 +49,8 @@ docs/      PLAN.md, architecture, demo script, Devpost copy, screenshots
 - AGP 9.1.1 (built-in Kotlin, Kotlin 2.3.20), Gradle 9.5.0, JDK 25 (Android Studio JBR), compileSdk/targetSdk 36, minSdk 26.
 - Build/test from `android/`: `./gradlew assembleDebug testDebugUnitTest`
 - MVVM + repository: `ui/*` (Composables + ViewModel exposing `StateFlow<UiState>`) → `domain/repository` interfaces → `data/repository` impls → `data/remote` (Retrofit + kotlinx.serialization).
-- No API calls in Composables. Screens are split into `XxxRoute` (gets ViewModel) and stateless `XxxScreen(state, callbacks)`.
+- No API calls in Composables. Screens are split into `XxxRoute` (gets ViewModel) and stateless `XxxScreen(state, actions/callbacks)`; ViewModels implement a small `XxxActions` interface so screenshot tests can pass no-op actions.
+- Screenshots: `ScreenshotTest` (Robolectric + Roborazzi) is excluded from normal runs; render with `./gradlew testDebugUnitTest -PrecordScreenshots --tests "*ScreenshotTest*"` → `docs/screenshots/`. Images come from `backend/static/products` via Coil's `LocalAsyncImagePreviewHandler`.
 - Manual DI via `core/AppContainer` (no Hilt/Koin). ViewModels expose a `Factory`.
 - Network errors map through `core/safeApiCall` → `AppResult.Failure(message)`.
 - Backend URL: `BuildConfig.API_BASE_URL` from `cartpilot.apiBaseUrl` (gradle.properties default `http://10.0.2.2:8000/`, override in `local.properties`). Cleartext allowed only for 10.0.2.2/localhost.

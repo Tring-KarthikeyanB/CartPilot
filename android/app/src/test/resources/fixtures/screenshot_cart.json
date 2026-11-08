@@ -1,0 +1,51 @@
+{
+  "session_id": "shot-session-01",
+  "items": [
+    {
+      "product_id": "kb-003",
+      "name": "Forge TKL Mechanical Keyboard (Brown Switches)",
+      "category": "keyboards",
+      "image_url": "/static/products/kb-003.jpg",
+      "stock_status": "in_stock",
+      "unit_price": 89.99,
+      "quantity": 1,
+      "line_total": 89.99
+    },
+    {
+      "product_id": "ms-002",
+      "name": "Precision Pro Ergonomic Mouse",
+      "category": "mice",
+      "image_url": "/static/products/ms-002.jpg",
+      "stock_status": "in_stock",
+      "unit_price": 59.99,
+      "quantity": 1,
+      "line_total": 59.99
+    },
+    {
+      "product_id": "hp-003",
+      "name": "Halo ANC Wireless Headphones",
+      "category": "headphones",
+      "image_url": "/static/products/hp-003.jpg",
+      "stock_status": "in_stock",
+      "unit_price": 149.99,
+      "quantity": 1,
+      "line_total": 149.99
+    },
+    {
+      "product_id": "ls-002",
+      "name": "Elevate Pro Adjustable Laptop Stand",
+      "category": "laptop_stands",
+      "image_url": "/static/products/ls-002.jpg",
+      "stock_status": "in_stock",
+      "unit_price": 59.99,
+      "quantity": 1,
+      "line_total": 59.99
+    }
+  ],
+  "item_count": 4,
+  "subtotal": 359.96,
+  "currency": "USD",
+  "budget": 300.0,
+  "budget_remaining": -59.96,
+  "over_budget": true
+}

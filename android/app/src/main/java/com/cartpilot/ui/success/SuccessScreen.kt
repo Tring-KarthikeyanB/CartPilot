@@ -54,6 +54,11 @@ fun SuccessRoute(
     viewModel: SuccessViewModel = viewModel(factory = SuccessViewModel.factory(orderId)),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    SuccessScreen(state, onRetry = viewModel::load, onDone = onDone)
+}
+
+@Composable
+fun SuccessScreen(state: SuccessUiState, onRetry: () -> Unit, onDone: () -> Unit) {
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         when (val s = state) {
             SuccessUiState.Loading -> LoadingState("Loading your receipt…")
@@ -62,7 +67,7 @@ fun SuccessRoute(
                 title = "Receipt unavailable",
                 message = s.message,
                 iconTint = MaterialTheme.colorScheme.error,
-                primaryAction = "Try again" to viewModel::load,
+                primaryAction = "Try again" to onRetry,
                 secondaryAction = "Back to home" to onDone,
             )
             is SuccessUiState.Loaded -> ReceiptContent(s.receipt, onDone)

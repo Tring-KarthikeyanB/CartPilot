@@ -29,7 +29,19 @@ data class CartUiState(
     val editingBudget: Boolean = false,
 )
 
-class CartViewModel(private val carts: CartRepository, private val events: AppEvents) : ViewModel() {
+/** User intents of the cart screen (implemented by [CartViewModel]). */
+interface CartActions {
+    fun refresh()
+    fun increment(productId: String, current: Int)
+    fun decrement(productId: String, current: Int)
+    fun remove(productId: String, name: String)
+    fun applySaving(saving: Saving)
+    fun editBudget(show: Boolean)
+    fun setBudget(amount: Double?)
+    fun askAgentToOptimize()
+}
+
+class CartViewModel(private val carts: CartRepository, private val events: AppEvents) : ViewModel(), CartActions {
 
     private val _state = MutableStateFlow(CartUiState(cart = carts.cart.value))
     val state: StateFlow<CartUiState> = _state.asStateFlow()
@@ -39,7 +51,7 @@ class CartViewModel(private val carts: CartRepository, private val events: AppEv
         refresh()
     }
 
-    fun refresh() {
+    override fun refresh() {
         _state.update { it.copy(loading = it.cart == null, error = null) }
         viewModelScope.launch {
             when (val r = carts.refresh()) {
@@ -75,19 +87,19 @@ class CartViewModel(private val carts: CartRepository, private val events: AppEv
         }
     }
 
-    fun increment(productId: String, current: Int) = mutate(productId) { carts.setQuantity(productId, current + 1) }
+    override fun increment(productId: String, current: Int) = mutate(productId) { carts.setQuantity(productId, current + 1) }
 
-    fun decrement(productId: String, current: Int) = mutate(productId) { carts.setQuantity(productId, current - 1) }
+    override fun decrement(productId: String, current: Int) = mutate(productId) { carts.setQuantity(productId, current - 1) }
 
-    fun remove(productId: String, name: String) = mutate(productId, "Removed $name") { carts.remove(productId) }
+    override fun remove(productId: String, name: String) = mutate(productId, "Removed $name") { carts.remove(productId) }
 
-    fun applySaving(saving: Saving) = mutate(saving.replaceProductId, "Swapped to ${saving.withName}, saving ${formatUsd(saving.savings)}") {
+    override fun applySaving(saving: Saving) = mutate(saving.replaceProductId, "Swapped to ${saving.withName}, saving ${formatUsd(saving.savings)}") {
         carts.replace(saving.replaceProductId, saving.withProductId)
     }
 
-    fun editBudget(show: Boolean) = _state.update { it.copy(editingBudget = show) }
+    override fun editBudget(show: Boolean) = _state.update { it.copy(editingBudget = show) }
 
-    fun setBudget(amount: Double?) {
+    override fun setBudget(amount: Double?) {
         _state.update { it.copy(editingBudget = false) }
         viewModelScope.launch {
             when (val r = carts.setBudget(amount)) {
@@ -98,7 +110,7 @@ class CartViewModel(private val carts: CartRepository, private val events: AppEv
     }
 
     /** Hands the cart to the AI agent; the chat screen picks this prompt up. */
-    fun askAgentToOptimize() {
+    override fun askAgentToOptimize() {
         val budget = _state.value.cart?.budget
         events.postPrompt(
             if (budget != null) "Optimize my cart so it stays within my ${formatUsd(budget)} budget without losing quality. Explain the changes."
