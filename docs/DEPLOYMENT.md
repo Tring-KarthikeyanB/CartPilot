@@ -5,7 +5,7 @@ The backend deploys to [Render](https://render.com) as a free HTTPS web service.
 ## 1. Push the repository to GitHub (public, MIT)
 
 ```bash
-git remote add origin https://github.com/<you>/CartPilot.git
+git remote add origin https://github.com/Tring-KarthikeyanB/CartPilot.git
 git push -u origin main
 ```
 

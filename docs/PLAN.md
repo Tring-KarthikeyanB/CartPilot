@@ -102,7 +102,7 @@ PayPal return URLs need a public URL; for local testing `http://localhost:8000` 
 - [x] GitHub Actions CI: backend pytest + Android assembleDebug/testDebugUnitTest/lintDebug; `gradlew` marked executable
 - [x] Committed `.env.example` refreshed (placeholders only); full git history scanned for secrets (clean)
 - [x] `docs/DEPLOYMENT.md`
-- [ ] Push to the public GitHub repo (needs the repo URL)
+- [x] Pushed to https://github.com/Tring-KarthikeyanB/CartPilot (visibility must be set to Public)
 - [ ] Create the Render Blueprint and enter secrets (Render account)
 - [ ] Verify the live `/api/v1/health`, then the full E2E on a device with the release APK and the Sandbox buyer
 

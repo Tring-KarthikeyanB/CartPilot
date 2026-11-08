@@ -69,6 +69,6 @@ Online shopping for something like a home office setup means a dozen tabs: compa
 
 ## Links
 
-- **Repository:** _add GitHub URL_
+- **Repository:** https://github.com/Tring-KarthikeyanB/CartPilot
 - **Demo video:** _add YouTube URL_
 - **Live API:** _add Render URL_/docs
